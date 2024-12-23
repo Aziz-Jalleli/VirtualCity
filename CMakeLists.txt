@@ -25,6 +25,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         batiment.h batiment.cpp
         ville.h ville.cpp
+        maison.h maison.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET VirtualCity APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

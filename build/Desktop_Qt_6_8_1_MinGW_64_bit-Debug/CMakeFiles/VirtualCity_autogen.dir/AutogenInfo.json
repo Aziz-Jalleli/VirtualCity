@@ -281,6 +281,12 @@
 			null
 		],
 		[
+			"C:/Users/azizj/Documents/VirtualCity/maison.h",
+			"MU",
+			"EWIEGA46WW/moc_maison.cpp",
+			null
+		],
+		[
 			"C:/Users/azizj/Documents/VirtualCity/ville.h",
 			"MU",
 			"EWIEGA46WW/moc_ville.cpp",
@@ -360,6 +366,7 @@
 		[ "C:/Users/azizj/Documents/VirtualCity/batiment.cpp", "MU", null ],
 		[ "C:/Users/azizj/Documents/VirtualCity/main.cpp", "MU", null ],
 		[ "C:/Users/azizj/Documents/VirtualCity/mainwindow.cpp", "MU", null ],
+		[ "C:/Users/azizj/Documents/VirtualCity/maison.cpp", "MU", null ],
 		[ "C:/Users/azizj/Documents/VirtualCity/ville.cpp", "MU", null ]
 	],
 	"UIC_OPTIONS" : [],
