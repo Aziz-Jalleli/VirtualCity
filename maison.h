@@ -10,9 +10,10 @@ private:
      int capaciteHabitants;
      int habitantsActuels;
 public:
-    Maison(int,QString,QString,int,int ,int,int,int);
-    void ajouterHabitants();
-    void retirerHabitants();
+    Maison(int,QString,QString,int,int,int,int,int);
+    void ajouterHabitants(int);
+    void retirerHabitants(int);
+    void afficherDetails() override;
 };
 
 

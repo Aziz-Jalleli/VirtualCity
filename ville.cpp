@@ -1,13 +1,13 @@
 #include "ville.h"
+#include<Qstring>
 
-
-Ville::Ville(QObject *parent, string nom, float budget,float population,int satisfaction, float Eau,float electricite ):QObject(parent)
+Ville::Ville(QObject *parent, QString nom, float budget,float population,int satisfaction, float eau,float electricite ):QObject(parent)
 {
     this->nom=nom;
     this->budget=budget;
     this->population=population;
     this->satisfaction=satisfaction;
-    this->Eau=Eau;
+    this->eau=eau;
     this->electricite=electricite;
 
 }

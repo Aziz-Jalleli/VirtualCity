@@ -1,6 +1,6 @@
 #ifndef VILLE_H
 #define VILLE_H
-#include<string>
+#include<Qstring>
 #include <QObject>
 #include <vector>
 #include "batiment.h"
@@ -10,14 +10,16 @@ class Ville: public QObject
 
     Q_OBJECT;
 private:
-    string nom;
-    float budget;
-    float population;
+    QString nom;
+    int budget;
+    int population;
     int satisfaction;
+    int eau;
+    int electricite;
     vector<Batiment> batiments;
-    string ressources;
+
 public:
-    Ville(QObject *parent = nullptr,string nom='', float budget =0,float population=0,int satisfaction =0,string ressources = "Eau");
+    Ville(QObject *parent = nullptr,QString=0, int budget=0,int=0,int=0 ,int=0 ,int=0, vector<Batiment> = 0);
     void ajouterBatiment(Batiment b);
     void supprimerBatiment(int id);
 };

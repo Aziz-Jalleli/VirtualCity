@@ -1,6 +1,7 @@
 #ifndef USINE_H
 #define USINE_H
 #include<Qstring>
+#include"batiment.h"
 class usine:public Batiment
 {
 private:
@@ -10,6 +11,7 @@ public:
     void produire_eau();
     void produire_elec();
     void calculer_polution();
+    void afficherDetails() override;
 };
 
 #endif // USINE_H
