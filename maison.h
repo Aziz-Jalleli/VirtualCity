@@ -2,11 +2,18 @@
 #define MAISON_H
 
 #include <QObject>
-
-class Maison
+#include "batiment.h"
+class Maison: public batiment
 {
+     Q_OBJECT;
+private:
+     int capaciteHabitants;
+     int habitantsActuels;
 public:
-    Maison();
+    Maison(int,int);
+    void ajouterHabitants();
+    void retirerHabitants();
 };
+
 
 #endif // MAISON_H

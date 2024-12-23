@@ -7,6 +7,7 @@
 using namespace std;
 class Ville: public QObject
 {
+
     Q_OBJECT;
 private:
     string nom;
