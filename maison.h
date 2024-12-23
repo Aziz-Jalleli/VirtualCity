@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "batiment.h"
-class Maison: public batiment
+class Maison: public Batiment
 {
      Q_OBJECT;
 private:
