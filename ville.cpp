@@ -1,14 +1,17 @@
+
 #include "ville.h"
 #include<Qstring>
 
-Ville::Ville(QObject *parent, QString nom, float budget,float population,int satisfaction, float eau,float electricite ):QObject(parent)
+using namespace std
+
+Ville::Ville(QObject *parent, QString nom, float budget,float population,int satisfaction):QObject(parent)
 {
     this->nom=nom;
     this->budget=budget;
-    this->population=population;
-    this->satisfaction=satisfaction;
-    this->eau=eau;
-    this->electricite=electricite;
+    Ville::calculerPopulation();
+    Ville::CalculerSatisfaction();
+    this->eau=0;
+    this->electricite=0;
 
 }
 void Ville::ajouterBatiment(Batiment b){
@@ -16,7 +19,7 @@ void Ville::ajouterBatiment(Batiment b){
 
 }
 void Ville::supprimerBatiment (int id){
-    vector<batiments>::iterator = batiments.begin();
+    vector<batiments>::iterator it = batiments.begin();
     while (it != batiments.end() && it->id != id){
         it++;
     }
@@ -24,5 +27,24 @@ void Ville::supprimerBatiment (int id){
         batiments.erase(it);
     }
 
+}
+void Ville::calculerConsommationTotale(){
+    for(int i=batiments.begin();i<batiments.size();i++){
+        eau+=batiments[i].get_eau();
+        electricite+=batiments[i].get_elec();
 
+    }
+}
+void Ville::CalculerSatisfaction(){
+    or(int i=batiments.begin();i<batiments.size();i++){
+        satisfaction+=batiments[i].get_satisfaction();
+    }
+}
+void Ville::calculerPopulation (){
+
+    for(int i=batiments.begin();i<batiments.size();i++){
+        if (batiment[i].get_habitant()){
+            population+=get_habitant();
+        }
+    }
 }

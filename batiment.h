@@ -6,7 +6,7 @@
 class Batiment:public QObject
 {
     Q_OBJECT;
-private:
+protected:
     int id;
     QString nom;
     QString type;
@@ -18,6 +18,9 @@ public:
     ~Batiment();
     virtual void afficherDetails();
     virtual void calculerImpactRessources()=0;
+    int get_eau();
+    int get_elec();
+    int get_satisfaction();
 
 
 };

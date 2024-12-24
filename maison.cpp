@@ -6,6 +6,8 @@ using namespace std;
 Maison::Maison(int id,QString nom,QString type,int cons_eau,int cons_elec,int effet_satisfaction,int capaciteHabitants ,int habitantsActuels) : Batiment( id, nom, type, cons_eau, cons_elec, effet_satisfaction) {
     this->capaciteHabitants=capaciteHabitants;
     this->habitantsActuels=habitantsActuels;
+    cons_elec=1000;
+    effet_satisfaction=10;
 
 }
 void Maison::ajouterHabitants(int nb){
@@ -16,6 +18,7 @@ void Maison::ajouterHabitants(int nb){
     }else{
         this->habitantsActuels = this->capaciteHabitants;
     }
+    Maison::calculerImpactRessources();
 
 }
 void Maison::retirerHabitants(int nb){
@@ -26,6 +29,7 @@ void Maison::retirerHabitants(int nb){
     }else{
         this->habitantsActuels = tmp;
     }
+    Maison::calculerImpactRessources();
 
 }
 void Maison::afficherDetails() {
@@ -33,4 +37,11 @@ void Maison::afficherDetails() {
 
     cout << capaciteHabitants <<endl;
     cout << habitantsActuels <<endl;
+}
+void Maison::calculerImpactRessources() {
+    cons_eau=habitantsActuels*360;
+
+}
+int Maison::get_habitant(){
+    return habitantsActuels;
 }

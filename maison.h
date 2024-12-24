@@ -14,6 +14,8 @@ public:
     void ajouterHabitants(int);
     void retirerHabitants(int);
     void afficherDetails() override;
+    void calculerImpactRessources() override;
+    int get_habitant();
 };
 
 

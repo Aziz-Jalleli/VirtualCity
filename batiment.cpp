@@ -21,3 +21,12 @@ void Batiment::afficherDetails(){
     cout<<cons_elec<<endl;
     cout<<effet_satisfaction<<endl;
 }
+int Batiment::get_eau(){
+    return cons_eau;
+}
+int Batiment::get_elec(){
+    return cons_elec;
+}
+int Batiment::get_satisfaction(){
+    return effet_satisfaction;
+}

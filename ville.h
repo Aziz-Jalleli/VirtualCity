@@ -19,9 +19,11 @@ private:
     vector<Batiment> batiments;
 
 public:
-    Ville(QObject *parent = nullptr,QString=0, int budget=0,int=0,int=0 ,int=0 ,int=0, vector<Batiment> = 0);
+    Ville(QObject *parent = nullptr,QString=0, int budget=0,int=0,int=0 ,int=0 ,int=0);
     void ajouterBatiment(Batiment b);
     void supprimerBatiment(int id);
+    void calculerPopulation();
+    void calculerConsommationTotale();
 };
 
 #endif // VILLE_H

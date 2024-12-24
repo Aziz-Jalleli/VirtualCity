@@ -5,6 +5,8 @@ using namespace std;
 parc::parc(int id,QString nom,QString type,int cons_eau,int cons_elec,int satisfaction,float surface ,int effetBienEtre) : Batiment( id, nom, type, cons_eau, cons_elec, effet_satisfaction) {
     this->surface=surface;
     this->effetBienEtre=effetBienEtre;
+    effet_satisfaction=5;
+    parc::calculerImpactRessources();
 }
 
 void parc::ameliorerBienEtre (){
@@ -20,4 +22,8 @@ void parc::afficherDetails() {
 
     cout << surface <<endl;
     cout << effetBienEtre<<endl;
+}
+void parc::calculerImpactRessources() {
+    cons_eau=surface/10;
+    cons_elec=700;
 }

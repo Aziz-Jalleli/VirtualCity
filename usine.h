@@ -12,6 +12,7 @@ public:
     void produire_elec();
     void calculer_polution();
     void afficherDetails() override;
+    void calculerImpactRessources() override;
 };
 
 #endif // USINE_H

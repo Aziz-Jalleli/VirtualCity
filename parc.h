@@ -5,7 +5,7 @@
 #include "batiment.h"
 
 
-class parc
+class parc:public Batiment
 {
     Q_OBJECT;
 private:
@@ -16,6 +16,7 @@ public:
     parc(int,QString,QString,int,int ,int,float,int);
     void ameliorerBienEtre ();
     void afficherDetails() override;
+    void calculerImpactRessources() override;
 };
 
 #endif // PARC_H
