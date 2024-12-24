@@ -26,7 +26,6 @@ void Ville::supprimerBatiment (int id){
     if (it != batiments.end()){
         batiments.erase(it);
     }
-<<<<<<< HEAD
 
 }
 void Ville::calculerConsommationTotale(){
@@ -48,12 +47,4 @@ void Ville::calculerPopulation (){
             population+=get_habitant();
         }
     }
-=======
-}
-int Ville::get_satisfaction(){
-    return satisfaction;
-}
-void Ville::set_satisfaction(){
-    satisfaction=satisfaction*85/100;
->>>>>>> Mohamed
 }

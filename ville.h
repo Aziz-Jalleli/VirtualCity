@@ -22,13 +22,8 @@ public:
     Ville(QObject *parent = nullptr,QString=0, int budget=0,int=0,int=0 ,int=0 ,int=0);
     void ajouterBatiment(Batiment b);
     void supprimerBatiment(int id);
-<<<<<<< HEAD
     void calculerPopulation();
     void calculerConsommationTotale();
-=======
-    int get_satisfaction();
-    void set_satisfaction();
->>>>>>> Mohamed
 };
 
 #endif // VILLE_H
