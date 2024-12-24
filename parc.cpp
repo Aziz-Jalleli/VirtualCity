@@ -27,3 +27,6 @@ void parc::calculerImpactRessources() {
     cons_eau=surface/10;
     cons_elec=700;
 }
+void parc::diminueBienEtre(){
+    this->effetBienEtre/2;
+}

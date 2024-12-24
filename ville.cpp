@@ -42,9 +42,26 @@ void Ville::CalculerSatisfaction(){
 }
 void Ville::calculerPopulation (){
 
-    for(int i=batiments.begin();i<batiments.size();i++){
-        if (batiment[i].get_habitant()){
-            population+=get_habitant();
+    for (Batiment* b : batiments) {
+        Maison* m = dynamic_cast<Maison*>(b);
+        if (m) {
+            population += m->get_habitant();
         }
     }
+}
+
+int ville::get_Elec (){
+    return electricite;
+}
+void ville::set_Elec (int newelec){
+    electricite = newelec;
+}
+int ville::get_satisfaction (){
+    return satisfaction;
+}
+void ville::set_satisfaction (newv){
+    satisfaction=newv;
+}
+vector<Batiment> ville::get_batiments(){
+    return batiments;
 }

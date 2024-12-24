@@ -17,6 +17,7 @@ public:
     void ameliorerBienEtre ();
     void afficherDetails() override;
     void calculerImpactRessources() override;
+    void diminueBienEtre();
 };
 
 #endif // PARC_H

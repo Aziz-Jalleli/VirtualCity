@@ -24,6 +24,12 @@ public:
     void supprimerBatiment(int id);
     void calculerPopulation();
     void calculerConsommationTotale();
+    int get_Elec ();
+    void set_Elec (newelec);
+    int get_satisfaction ();
+    void set_satisfaction (newv);
+    void Event_panne_courant ();
+    vector<Batiment> get_batiments();
 };
 
 #endif // VILLE_H
