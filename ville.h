@@ -20,6 +20,8 @@ public:
     Ville(QObject *parent = nullptr,string nom='', float budget =0,float population=0,int satisfaction =0,string ressources = "Eau");
     void ajouterBatiment(Batiment b);
     void supprimerBatiment(int id);
+    int get_satisfaction();
+    void set_satisfaction();
 };
 
 #endif // VILLE_H

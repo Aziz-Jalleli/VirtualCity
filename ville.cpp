@@ -23,6 +23,10 @@ void Ville::supprimerBatiment (int id){
     if (it != batiments.end()){
         batiments.erase(it);
     }
-
-
+}
+int Ville::get_satisfaction(){
+    return satisfaction;
+}
+void Ville::set_satisfaction(){
+    satisfaction=satisfaction*85/100;
 }
