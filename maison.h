@@ -5,7 +5,6 @@
 #include "batiment.h"
 class Maison: public Batiment
 {
-     Q_OBJECT;
 private:
      int capaciteHabitants;
      int habitantsActuels;
@@ -15,7 +14,7 @@ public:
     void retirerHabitants(int);
     void afficherDetails() override;
     void calculerImpactRessources() override;
-    int get_habitant();
+    int get_habitant() const;
 };
 
 

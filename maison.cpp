@@ -3,7 +3,7 @@
 #include<Qstring>
 using namespace std;
 
-Maison::Maison(int id,QString nom,QString type,int cons_eau,int cons_elec,int effet_satisfaction,int capaciteHabitants ,int habitantsActuels) : Batiment( id, nom, type, cons_eau, cons_elec, effet_satisfaction) {
+Maison::Maison(int id,QString nom,QString type,int cons_eau,int cons_elec,int effet_satisfaction,int capaciteHabitants ,int habitantsActuels) : Batiment(nullptr, id, nom, type, cons_eau, cons_elec, effet_satisfaction) {
     this->capaciteHabitants=capaciteHabitants;
     this->habitantsActuels=habitantsActuels;
     cons_elec=1000;
@@ -42,6 +42,6 @@ void Maison::calculerImpactRessources() {
     cons_eau=habitantsActuels*360;
 
 }
-int Maison::get_habitant(){
+int Maison::get_habitant() const{
     return habitantsActuels;
 }

@@ -1,67 +1,81 @@
 
 #include "ville.h"
-#include<Qstring>
+#include "batiment.h"
+#include "maison.h" // Si vous utilisez une classe Maison
+#include <QString>
+#include <vector>
 
-using namespace std
+using namespace std;
 
-Ville::Ville(QObject *parent, QString nom, float budget,float population,int satisfaction):QObject(parent)
-{
-    this->nom=nom;
-    this->budget=budget;
-    Ville::calculerPopulation();
-    Ville::CalculerSatisfaction();
-    this->eau=0;
-    this->electricite=0;
+Ville::Ville(QObject* parent, QString nom, int budget, int population, int satisfaction, int eau, int electricite)
+    : QObject(parent), nom(nom), budget(budget), population(population), satisfaction(satisfaction), eau(eau), electricite(electricite) {}
 
-}
-void Ville::ajouterBatiment(Batiment b){
-    batiments.push_back(b);
+Ville::Ville(QObject* parent, QString nom, int budget, int population, int satisfaction)
+    : QObject(parent), nom(nom), budget(budget), population(population), satisfaction(satisfaction), eau(0), electricite(0) {}
 
-}
-void Ville::supprimerBatiment (int id){
-    vector<batiments>::iterator it = batiments.begin();
-    while (it != batiments.end() && it->id != id){
-        it++;
-    }
-    if (it != batiments.end()){
-        batiments.erase(it);
+Ville& Ville::operator=(const Ville& other) {
+    if (this == &other) {
+        return *this;  // Avoid self-assignment
     }
 
-}
-void Ville::calculerConsommationTotale(){
-    for(int i=batiments.begin();i<batiments.size();i++){
-        eau+=batiments[i].get_eau();
-        electricite+=batiments[i].get_elec();
+    // Copy the data from 'other' to 'this'
+    this->nom = other.nom;
+    this->budget = other.budget;
+    this->population = other.population;
+    this->satisfaction = other.satisfaction;
+    this->eau = other.eau;
+    this->electricite = other.electricite;
 
+    // Deep copy for batiments if needed
+    this->batiments = other.batiments;
+
+    return *this;  // Return the current object
+}
+
+
+
+void Ville::calculerConsommationTotale() {
+    eau = 0;
+    electricite = 0;
+    for (const auto &batiment : batiments) {
+        eau += batiment.get_eau();
+        electricite += batiment.get_elec();
     }
 }
-void Ville::CalculerSatisfaction(){
-    or(int i=batiments.begin();i<batiments.size();i++){
-        satisfaction+=batiments[i].get_satisfaction();
+
+void Ville::CalculerSatisfaction() {
+    satisfaction = 0;
+    for (const auto &batiment : batiments) {
+        satisfaction += batiment.get_satisfaction();
     }
 }
-void Ville::calculerPopulation (){
 
-    for (Batiment* b : batiments) {
-        Maison* m = dynamic_cast<Maison*>(b);
+void Ville::calculerPopulation() {
+    population = 0;
+    for (const auto &batiment : batiments) {
+        const Maison *m = dynamic_cast<const Maison *>(&batiment);
         if (m) {
             population += m->get_habitant();
         }
     }
 }
 
-int ville::get_Elec (){
+int Ville::get_Elec() const {
     return electricite;
 }
-void ville::set_Elec (int newelec){
+
+void Ville::set_Elec(int newelec) {
     electricite = newelec;
 }
-int ville::get_satisfaction (){
+
+int Ville::get_satisfaction() const {
     return satisfaction;
 }
-void ville::set_satisfaction (newv){
-    satisfaction=newv;
+
+void Ville::set_satisfaction(int newv) {
+    satisfaction = newv;
 }
-vector<Batiment> ville::get_batiments(){
+
+vector<Batiment> Ville::get_batiments() const{
     return batiments;
 }

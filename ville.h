@@ -19,17 +19,20 @@ private:
     vector<Batiment> batiments;
 
 public:
-    Ville(QObject *parent = nullptr,QString=0, int budget=0,int=0,int=0 ,int=0 ,int=0);
-    void ajouterBatiment(Batiment b);
-    void supprimerBatiment(int id);
+    Ville(QObject *parent = nullptr,QString=0, int budget=0,int population=0,int satisfaction=0 ,int eau=0 ,int electricite=0);
+    Ville(QObject *parent, QString, int, int, int);
+    Ville& operator=(const Ville& other);
+    void ajouterBatiment(Batiment& );
+    void supprimerBatiment(int );
     void calculerPopulation();
     void calculerConsommationTotale();
-    int get_Elec ();
-    void set_Elec (newelec);
-    int get_satisfaction ();
-    void set_satisfaction (newv);
+    void CalculerSatisfaction();
+    int get_Elec () const;
+    void set_Elec (int );
+    int get_satisfaction () const;
+    void set_satisfaction (int ) ;
     void Event_panne_courant ();
-    vector<Batiment> get_batiments();
+    vector<Batiment> get_batiments() const;
 };
 
 #endif // VILLE_H

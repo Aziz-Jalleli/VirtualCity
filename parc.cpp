@@ -2,7 +2,7 @@
 #include<iostream>
 #include<Qstring>
 using namespace std;
-parc::parc(int id,QString nom,QString type,int cons_eau,int cons_elec,int satisfaction,float surface ,int effetBienEtre) : Batiment( id, nom, type, cons_eau, cons_elec, effet_satisfaction) {
+parc::parc(int id,QString nom,QString type,int cons_eau,int cons_elec,int satisfaction,float surface ,int effetBienEtre) : Batiment(nullptr, id, nom, type, cons_eau, cons_elec, effet_satisfaction) {
     this->surface=surface;
     this->effetBienEtre=effetBienEtre;
     effet_satisfaction=5;

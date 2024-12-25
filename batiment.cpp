@@ -21,12 +21,41 @@ void Batiment::afficherDetails(){
     cout<<cons_elec<<endl;
     cout<<effet_satisfaction<<endl;
 }
-int Batiment::get_eau(){
+int Batiment::get_eau() const{
     return cons_eau;
 }
-int Batiment::get_elec(){
+int Batiment::get_elec() const{
     return cons_elec;
 }
-int Batiment::get_satisfaction(){
+int Batiment::get_satisfaction() const {
     return effet_satisfaction;
+}
+int Batiment::get_id () const{
+    return id;
+}
+Batiment::Batiment(const Batiment& other)
+    : QObject(other.parent()), id(other.id), nom(other.nom), type(other.type), cons_eau(other.cons_eau), cons_elec(other.cons_elec), effet_satisfaction(other.effet_satisfaction)
+{
+    // If you had pointers or dynamically allocated resources, you would need to deep copy them here
+}
+
+// Assignment operator for deep copy
+Batiment& Batiment::operator=(const Batiment& other) {
+    if (this != &other) {
+        // Assign all members
+        id = other.id;
+        nom = other.nom;
+        type = other.type;
+        cons_eau = other.cons_eau;
+        cons_elec = other.cons_elec;
+        effet_satisfaction = other.effet_satisfaction;
+        // If you had dynamic memory, it would be a deep copy here as well
+    }
+    return *this;
+}
+void Batiment::calculerImpactRessources(){
+
+}
+Batiment::~Batiment(){
+
 }

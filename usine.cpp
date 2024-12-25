@@ -2,8 +2,11 @@
 #include<iostream>
 using namespace std;
 
-usine::usine(int id,QString nom,QString type,int cons_eau,int cons_elec,int effet_satisfaction,int production_eau,int production_elec,int pollution ) :Batiment(id, nom, type, cons_eau, cons_elec,effet_satisfaction,0,0,0){
+usine::usine(int id,QString nom,QString type,int cons_eau,int cons_elec,int effet_satisfaction) :Batiment(nullptr,id, nom, type, cons_eau, cons_elec,effet_satisfaction){
     usine::calculerImpactRessources();
+    production_eau =0;
+    production_elec=0;
+    pollution =0;
     effet_satisfaction=10;
 }
 void usine::produire_eau(){

@@ -1,17 +1,20 @@
 #include "simulation.h"
 #include "ville.h"
 #include <cstdlib>
+#include<iostream>
+#include "batiment.h"
 #include "parc.h"
-Simulation::Simulation(ville v) {
-    this->Myville =v;
-    this->cycleActuel=0;
+using namespace std;
+Simulation::Simulation(const Ville& v) {
+    Myville =v;
+    cycleActuel=0;
     Evenements.push_back("incendies");
     Evenements.push_back("Grève");
     Evenements.push_back("&nondation");
     Evenements.push_back("pigeons");
     Evenements.push_back("transport");
 }
-void Simulation::evenementrandom() {
+void Simulation::declencherEvenement() {
     int index = rand() % Evenements.size();
     QString evenement = Evenements[index];
 
@@ -25,13 +28,13 @@ void Simulation::evenementrandom() {
         Event_panne_transports_publics();
     }
 }
-void demarrerCycle() {
+void Simulation::demarrerCycle() {
     cycleActuel++;
-    std::cout << "Début du cycle " << cycleActuel << "...\n";
+    cout<< "Début du cycle " << cycleActuel << "...\n";
 }
 
-void terminerCycle() {
-    std::cout << "Fin du cycle " << cycleActuel << ".\n";
+void Simulation::terminerCycle() {
+    cout << "Fin du cycle " <<cycleActuel<< ".\n";
     cycleActuel--;
 }
 void Simulation::Event_panne_courant (){
@@ -42,20 +45,23 @@ void Simulation::Event_pigeons(){
     int n= Myville.get_satisfaction() - (Myville.get_satisfaction()*0.15);
     Myville.set_satisfaction(n);
 }
-void Simulation::Event_jardiniers(){
-    int n= Myville.get_satisfaction() - (Myville.get_satisfaction()*0.20);
+void Simulation::Event_jardiniers() {
+    int n = Myville.get_satisfaction() - (Myville.get_satisfaction() * 0.20);
     Myville.set_satisfaction(n);
-    batiments = Myville.get_batiments();
-    for (Batiment* b : batiments) {
-        parc* p = dynamic_cast<Parc*>(b);
+
+    std::vector<Batiment> batiments = Myville.get_batiments(); // Vector of Batiment objects
+
+    for (Batiment& b : batiments) { // Iterate by reference to avoid unnecessary copying
+        parc* p = dynamic_cast<parc*>(&b); // Try to cast the Batiment to Parc
         if (p) {
-            p->diminueBienEtre();
+            p->diminueBienEtre(); // Call diminueBienEtre for Parc objects
         }
-
-
     }
-
 }
+
+
+
+
 void Simulation::Event_panne_transports_publics(){
     int n= Myville.get_satisfaction() - (Myville.get_satisfaction()*0.10);
     Myville.set_satisfaction(n);

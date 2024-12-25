@@ -17,10 +17,14 @@ public:
     Batiment(QObject *parent = nullptr,int id=0,QString nom="unknown",QString type="unknown",int cons_eau=0,int cons_elec=0,int effet_satisfaction=0);
     ~Batiment();
     virtual void afficherDetails();
-    virtual void calculerImpactRessources()=0;
-    int get_eau();
-    int get_elec();
-    int get_satisfaction();
+    virtual bool isParc() const { return false; }
+    virtual void calculerImpactRessources();
+    Batiment(const Batiment& other);
+    Batiment& operator=(const Batiment& other);
+    int get_eau()const;
+    int get_elec()const;
+    int get_satisfaction() const;
+    int get_id()const;
 
 
 };
