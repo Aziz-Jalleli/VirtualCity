@@ -25,6 +25,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    Maison m1;
+    std::unique_ptr<Maison> m1;
 };
 #endif // MAINWINDOW_H
