@@ -54,3 +54,6 @@ QString Maison:: getDetails() const {
                .arg(capaciteHabitants)
                .arg(habitantsActuels);
 }
+QString Maison::getname(){
+    return Batiment::getname() ;
+}

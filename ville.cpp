@@ -7,11 +7,8 @@
 
 using namespace std;
 
-Ville::Ville(QObject* parent, QString nom, int budget, int population, int satisfaction, int eau, int electricite)
-    : QObject(parent), nom(nom), budget(budget), population(population), satisfaction(satisfaction), eau(eau), electricite(electricite) {}
-
-Ville::Ville(QObject* parent, QString nom, int budget, int population, int satisfaction)
-    : QObject(parent), nom(nom), budget(budget), population(population), satisfaction(satisfaction), eau(0), electricite(0) {}
+Ville::Ville(QObject* parent, QString nom, int budget)
+    : QObject(parent), nom(nom), budget(budget), population(0), satisfaction(0), eau(0), electricite(0) {}
 
 Ville& Ville::operator=(const Ville& other) {
     if (this == &other) {

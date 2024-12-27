@@ -11,6 +11,7 @@ private:
 public:
     Maison();
     Maison(int,QString,int);
+    QString getname();
     void ajouterHabitants(int);
     void retirerHabitants(int);
     void afficherDetails() override;

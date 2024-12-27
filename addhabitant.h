@@ -14,7 +14,10 @@ class addhabitant : public QDialog
 public:
     explicit addhabitant(QWidget *parent = nullptr);
     ~addhabitant();
-    int getHabitants() const;
+    void populateHouses(const QStringList& houseNames); // Populate ComboBox
+    int getSelectedHouseIndex(); // Get selected house index
+    int getHabitants(); // Get number of habitants
+
 
 private:
     Ui::addhabitant *ui;

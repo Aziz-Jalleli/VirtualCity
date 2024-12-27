@@ -16,7 +16,15 @@ addhabitant::~addhabitant()
 {
     delete ui;
 }
-int addhabitant::getHabitants() const
+int addhabitant::getHabitants()
 {
     return ui->spinBox->value(); // Retrieve the value from the QSpinBox
+}
+void addhabitant::populateHouses(const QStringList& houseNames) {
+    ui->comboBox->clear();
+    ui->comboBox->addItems(houseNames);
+}
+
+int addhabitant::getSelectedHouseIndex() {
+    return ui->comboBox->currentIndex();
 }

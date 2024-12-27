@@ -26,6 +26,7 @@ public:
     int get_satisfaction() const;
     int get_id()const;
     virtual QString getDetails() const;
+    virtual QString getname();
 
 
 };

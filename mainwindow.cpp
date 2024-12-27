@@ -7,6 +7,8 @@
 #include "createmaison.h"
 #include <QLineEdit>
 #include <QSpinBox>
+#include"createville.h"
+#include<memory>
 using namespace std;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -24,6 +26,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
+    if (!v1) {
+        QMessageBox::warning(this, "No City", "Please create a city before adding habitants.");
+        return;
+    }
     // Open the CreateMaison dialog
     createmaison createDialog(this);
 
@@ -34,7 +40,12 @@ void MainWindow::on_pushButton_clicked()
         int capacity = createDialog.findChild<QSpinBox*>("spinBox")->value();
 
         // Create a new Maison object
-        m1 = std::make_unique<Maison>(1, houseName, capacity);
+         m1 = std::make_shared<Maison>(1, houseName, capacity);
+
+        if (v1) {
+            v1->ajouterBatiment(m1);
+
+        }
 
         // Display the details of the created Maison
         Afficherdetails afficherdetails(this);
@@ -48,23 +59,67 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
+    if (!v1) {
+        QMessageBox::warning(this, "No City", "Please create a city before adding habitants.");
+        return;
+    }
     // Create and display the custom dialog
     addhabitant dialog(this);
+    QStringList houseNames;
+    for (const auto& maison : v1->get_batiments()) {
+        houseNames << maison->getname(); // Assuming `getName()` exists in `Maison`
+    }
+    dialog.populateHouses(houseNames);
 
-    // Show the dialog and check if the user clicked "OK"
+    // Execute the dialog
     if (dialog.exec() == QDialog::Accepted) {
-        // Retrieve the number of habitants from the dialog
+        int selectedIndex = dialog.getSelectedHouseIndex();
         int numHabitants = dialog.getHabitants();
 
-        // Add habitants to the Maison object
-        m1->ajouterHabitants(numHabitants);
+        // Ensure a valid house is selected
+        if (selectedIndex < 0 || selectedIndex >= v1->get_batiments().size()) {
+            QMessageBox::warning(this, "Invalid Selection", "Please select a valid house.");
+            return;
+        }
 
-        // Display a confirmation message
+        // Add habitants to the selected house
+        auto selectedMaison = std::dynamic_pointer_cast<Maison>(v1->get_batiments()[selectedIndex]);
+        selectedMaison->ajouterHabitants(numHabitants);
+
+        // Show a confirmation message
         QMessageBox::information(this,
-                                 tr("Habitants Added"),
-                                 tr("%1 habitants have been added.\nCurrent inhabitants: %2")
+                                 "Habitants Added",
+                                 QString("%1 habitants have been added to %2.\nCurrent inhabitants: %3")
                                      .arg(numHabitants)
-                                     .arg(m1->get_habitant()));
+                                     .arg(selectedMaison->getname())
+                                     .arg(selectedMaison->get_habitant()));
     }
 }
+
+
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    createville createDialog(this);
+
+    if (createDialog.exec() == QDialog::Accepted) {
+        // Retrieve input values
+        QString VilleName = createDialog.findChild<QLineEdit*>("lineEdit")->text();
+
+        // Retrieve and validate budget input
+        QString budgetText = createDialog.findChild<QLineEdit*>("lineEdit_2")->text();
+        bool ok;
+        int Budget = budgetText.toInt(&ok);
+
+        if (!ok) {
+            QMessageBox::warning(this, "Invalid Input", "Please enter a valid integer for the budget.");
+            return;
+        }
+
+        // Create the Ville object
+        v1 = std::make_shared<Ville>(nullptr, VilleName, Budget);
+    }
+}
+
+
 

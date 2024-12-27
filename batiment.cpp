@@ -68,3 +68,6 @@ QString Batiment:: getDetails() const {
         .arg(cons_elec)
         .arg(effet_satisfaction);
 }
+QString Batiment::getname(){
+    return nom;
+}
