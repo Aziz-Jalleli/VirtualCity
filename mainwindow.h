@@ -19,5 +19,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+<<<<<<< Updated upstream
+=======
+    std::unique_ptr<Maison> m1;
+>>>>>>> Stashed changes
 };
 #endif // MAINWINDOW_H
