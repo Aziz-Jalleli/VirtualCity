@@ -59,3 +59,12 @@ void Batiment::calculerImpactRessources(){
 Batiment::~Batiment(){
 
 }
+QString Batiment:: getDetails() const {
+    return QString("ID: %1\nName: %2\nType: %3\nWater Consumption: %4\nElectricity Consumption: %5\nSatisfaction Effect: %6")
+    .arg(id)
+        .arg(nom)
+        .arg(type)
+        .arg(cons_eau)
+        .arg(cons_elec)
+        .arg(effet_satisfaction);
+}

@@ -45,3 +45,9 @@ void Maison::calculerImpactRessources() {
 int Maison::get_habitant() const{
     return habitantsActuels;
 }
+QString Maison:: getDetails() const {
+    return Batiment::getDetails() +
+           QString("\nCapacity: %1\nCurrent Inhabitants: %2")
+               .arg(capaciteHabitants)
+               .arg(habitantsActuels);
+}

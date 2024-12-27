@@ -25,6 +25,7 @@ public:
     int get_elec()const;
     int get_satisfaction() const;
     int get_id()const;
+    virtual QString getDetails() const;
 
 
 };

@@ -15,6 +15,7 @@ public:
     void afficherDetails() override;
     void calculerImpactRessources() override;
     int get_habitant() const;
+    QString getDetails() const override;
 };
 
 
