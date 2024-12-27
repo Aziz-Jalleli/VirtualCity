@@ -3,6 +3,11 @@
 #include<Qstring>
 using namespace std;
 
+Maison::Maison() : Batiment(nullptr, 0, "", "Maison", 0, 1000, 10) {
+    this->capaciteHabitants=0;
+    this->habitantsActuels=0;
+
+}
 Maison::Maison(int id,QString nom,int capaciteHabitants) : Batiment(nullptr, id, nom, "Maison", 0, 1000, 10) {
     this->capaciteHabitants=capaciteHabitants;
     this->habitantsActuels=0;

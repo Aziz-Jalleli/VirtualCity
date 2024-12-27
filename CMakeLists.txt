@@ -31,6 +31,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         simulation.h simulation.cpp
         simulation.h simulation.cpp
         afficherdetails.h afficherdetails.cpp afficherdetails.ui
+        addhabitant.h addhabitant.cpp addhabitant.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET VirtualCity APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

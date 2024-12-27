@@ -9,6 +9,7 @@ private:
      int capaciteHabitants;
      int habitantsActuels;
 public:
+    Maison();
     Maison(int,QString,int);
     void ajouterHabitants(int);
     void retirerHabitants(int);
