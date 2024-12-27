@@ -19,7 +19,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    Maison m1(1,"darhamma","maison",0,0,0,4,0);
+    Maison m1(1,"darhamma",4);
+    m1.ajouterHabitants(5);
 
     Afficherdetails afficherdetails(this);
     afficherdetails.setDetails(m1.getDetails());

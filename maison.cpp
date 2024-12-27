@@ -3,11 +3,9 @@
 #include<Qstring>
 using namespace std;
 
-Maison::Maison(int id,QString nom,QString type,int cons_eau,int cons_elec,int effet_satisfaction,int capaciteHabitants ,int habitantsActuels) : Batiment(nullptr, id, nom, type, cons_eau, cons_elec, effet_satisfaction) {
+Maison::Maison(int id,QString nom,int capaciteHabitants) : Batiment(nullptr, id, nom, "Maison", 0, 1000, 10) {
     this->capaciteHabitants=capaciteHabitants;
-    this->habitantsActuels=habitantsActuels;
-    cons_elec=1000;
-    effet_satisfaction=10;
+    this->habitantsActuels=0;
 
 }
 void Maison::ajouterHabitants(int nb){
