@@ -4,6 +4,7 @@
 #include <QObject>
 #include <vector>
 #include "batiment.h"
+#include <memory>
 using namespace std;
 class Ville: public QObject
 {
@@ -16,13 +17,13 @@ private:
     int satisfaction;
     int eau;
     int electricite;
-    vector<Batiment> batiments;
+    vector<std::shared_ptr<Batiment>> batiments;
 
 public:
     Ville(QObject *parent = nullptr,QString=0, int budget=0,int population=0,int satisfaction=0 ,int eau=0 ,int electricite=0);
     Ville(QObject *parent, QString, int, int, int);
     Ville& operator=(const Ville& other);
-    void ajouterBatiment(Batiment& );
+    void ajouterBatiment(shared_ptr<Batiment> );
     void supprimerBatiment(int );
     void calculerPopulation();
     void calculerConsommationTotale();
@@ -32,7 +33,7 @@ public:
     int get_satisfaction () const;
     void set_satisfaction (int ) ;
     void Event_panne_courant ();
-    vector<Batiment> get_batiments() const;
+    vector<std::shared_ptr<Batiment>> get_batiments() const;
 };
 
 #endif // VILLE_H

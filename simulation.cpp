@@ -49,15 +49,15 @@ void Simulation::Event_jardiniers() {
     int n = Myville.get_satisfaction() - (Myville.get_satisfaction() * 0.20);
     Myville.set_satisfaction(n);
 
-    std::vector<Batiment> batiments = Myville.get_batiments(); // Vector of Batiment objects
+    std::vector<std::shared_ptr<Batiment>> batiments = Myville.get_batiments();
 
-    for (Batiment& b : batiments) { // Iterate by reference to avoid unnecessary copying
-        parc* p = dynamic_cast<parc*>(&b); // Try to cast the Batiment to Parc
-        if (p) {
-            p->diminueBienEtre(); // Call diminueBienEtre for Parc objects
+    for (const auto& b : batiments) {
+        if (auto p = std::dynamic_pointer_cast<parc>(b)) {
+            p->diminueBienEtre();
         }
     }
 }
+
 
 
 
