@@ -2,6 +2,7 @@
 #define CREATEMAISON_H
 
 #include <QDialog>
+#include "Maison.h"
 
 namespace Ui {
 class createmaison;
@@ -13,6 +14,7 @@ class createmaison : public QDialog
 
 public:
     explicit createmaison(QWidget *parent = nullptr);
+     Maison createMaison();
     ~createmaison();
 
 private:

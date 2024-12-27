@@ -4,11 +4,11 @@
 #include"QMessageBox"
 #include"afficherdetails.h"
 #include"addhabitant.h"
+#include "createmaison.h"
 using namespace std;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    , m1(1, "darhamma", 4)
 {
     ui->setupUi(this);
 
@@ -21,11 +21,23 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    Afficherdetails afficherdetails(this);
-    afficherdetails.setDetails(m1.getDetails());
-    afficherdetails.exec();
-    QMessageBox::information(this, "Object Created", "The Maison object has been successfully created.");
+    createmaison createMasionDialog(this);
+
+    if (createMasionDialog.exec() == QDialog::Accepted) {
+        // Create a new Maison object with data from the dialog
+        m1 = createMasionDialog.createMaison();
+        Afficherdetails afficherdetails(this);
+        afficherdetails.setDetails(m1.getDetails());
+        afficherdetails.exec();
+
+        // Optionally, store the newMaison in a list, display its details, or perform other actions
+        QMessageBox::information(this, "Object Created", "The Maison object has been successfully created.");
+
+        // You can perform other actions with newMaison, e.g., add it to a list of maisons
+        // maisonsList.append(newMaison);
+    }
 }
+
 
 
 void MainWindow::on_pushButton_2_clicked()
