@@ -41,3 +41,7 @@ void usine::calculerImpactRessources() {
 int usine::geteau() const{
     return production_eau;
 }
+int usine::getelectricite() const{
+    return production_elec;
+}
+

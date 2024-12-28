@@ -16,6 +16,7 @@ public:
     void calculerImpactRessources() override;
     QString getDetails() const override;
     int geteau() const;
+    int getelectricite() const;
 };
 
 #endif // USINE_H
