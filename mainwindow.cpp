@@ -9,6 +9,7 @@
 #include <QSpinBox>
 #include"createville.h"
 #include<memory>
+#include"createusine.h"
 using namespace std;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -24,7 +25,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_Create_Maison_clicked()
 {
     if (!v1) {
         QMessageBox::warning(this, "No City", "Please create a city before adding habitants.");
@@ -57,7 +58,7 @@ void MainWindow::on_pushButton_clicked()
 }
 
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_Ajouter_Habitant_clicked()
 {
     if (!v1) {
         QMessageBox::warning(this, "No City", "Please create a city before adding habitants.");
@@ -98,7 +99,7 @@ void MainWindow::on_pushButton_2_clicked()
 
 
 
-void MainWindow::on_pushButton_3_clicked()
+void MainWindow::on_Create_Ville_clicked()
 {
     createville createDialog(this);
 
@@ -122,4 +123,48 @@ void MainWindow::on_pushButton_3_clicked()
 }
 
 
+
+
+void MainWindow::on_Create_Usine_clicked()
+{
+    if (!v1) {
+        QMessageBox::warning(this, "No City", "Please create a city before adding habitants.");
+        return;
+    }
+    createusine createDialog(this);
+
+    // If the user accepts the dialog
+    if (createDialog.exec() == QDialog::Accepted) {
+        // Retrieve input values
+        QString UsineName = createDialog.findChild<QLineEdit*>("lineEdit")->text();
+
+
+        // Create a new Maison object
+        u1 = std::make_shared<usine>(1, UsineName);
+
+        if (v1) {
+            v1->ajouterBatiment(u1);
+
+        }
+
+        // Display the details of the created Maison
+        Afficherdetails afficherdetails(this);
+        afficherdetails.setDetails(u1->getDetails());
+        afficherdetails.exec();
+
+        QMessageBox::information(this, "Usine Created", "The Usine object has been successfully created.");
+    }
+}
+
+
+void MainWindow::on_Produire_eau_clicked()
+{
+
+}
+
+
+void MainWindow::on_pushButton_6_clicked()
+{
+
+}
 

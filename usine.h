@@ -7,12 +7,14 @@ class usine:public Batiment
 private:
     int production_eau,production_elec,pollution;
 public:
-    usine(int,QString,QString,int,int,int);
+    usine();
+    usine(int,QString);
     void produire_eau();
     void produire_elec();
     void calculer_polution();
     void afficherDetails() override;
     void calculerImpactRessources() override;
+    QString getDetails() const override;
 };
 
 #endif // USINE_H

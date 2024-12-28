@@ -2,12 +2,15 @@
 #include<iostream>
 using namespace std;
 
-usine::usine(int id,QString nom,QString type,int cons_eau,int cons_elec,int effet_satisfaction) :Batiment(nullptr,id, nom, type, cons_eau, cons_elec,effet_satisfaction){
-    usine::calculerImpactRessources();
-    production_eau =0;
+usine::usine():Batiment(nullptr, 0, "", "Usine", 500, 2000, 10){
+    pollution=0;
+    production_eau=0;
     production_elec=0;
+}
+usine::usine(int id,QString nom) :Batiment(nullptr,id, nom, "Usine", 500, 2000,10){
     pollution =0;
-    effet_satisfaction=10;
+    production_eau=0;
+    production_elec=0;
 }
 void usine::produire_eau(){
     production_eau+=1360;
@@ -23,6 +26,13 @@ void usine::afficherDetails() {
     cout << production_eau <<endl;
     cout << production_elec <<endl;
     cout << pollution <<endl;
+}
+QString usine:: getDetails() const {
+    return Batiment::getDetails() +
+           QString("\nProduction eau: %1\nProduction electricite: %2\nPollution: %3")
+               .arg(production_eau)
+               .arg(production_elec)
+               .arg(pollution);
 }
 void usine::calculerImpactRessources() {
     cons_eau=500;

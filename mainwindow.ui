@@ -17,33 +17,58 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>240</x>
       <y>200</y>
-      <width>213</width>
-      <height>69</height>
+      <width>264</width>
+      <height>105</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="pushButton_3">
-       <property name="text">
-        <string>Create Ville</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="Create_Ville">
+         <property name="text">
+          <string>Create Ville</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Create_Maison">
          <property name="text">
           <string>Create Maison</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="Ajouter_Habitant">
          <property name="text">
           <string>Ajouter habitant</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QPushButton" name="Create_Usine">
+         <property name="text">
+          <string>Create Usine</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Produire_eau">
+         <property name="text">
+          <string>Produire eau</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_6">
+         <property name="text">
+          <string>Produire Electricité</string>
          </property>
         </widget>
        </item>
