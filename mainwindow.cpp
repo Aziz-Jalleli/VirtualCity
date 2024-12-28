@@ -10,6 +10,7 @@
 #include"createville.h"
 #include<memory>
 #include"createusine.h"
+#include"produireeau.h"
 using namespace std;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -68,7 +69,9 @@ void MainWindow::on_Ajouter_Habitant_clicked()
     addhabitant dialog(this);
     QStringList houseNames;
     for (const auto& maison : v1->get_batiments()) {
-        houseNames << maison->getname(); // Assuming `getName()` exists in `Maison`
+        if(maison->gettype()=="Maison"){
+            houseNames << maison->getname(); // Assuming `getName()` exists in `Maison`
+    }
     }
     dialog.populateHouses(houseNames);
 
@@ -159,7 +162,42 @@ void MainWindow::on_Create_Usine_clicked()
 
 void MainWindow::on_Produire_eau_clicked()
 {
+    if (!v1) {
+        QMessageBox::warning(this, "No City", "Please create a city before adding habitants.");
+        return;
+    }
+    // Create and display the custom dialog
+    produireeau dialog(this);
+    QStringList UsineNames;
+    for (const auto& Usine : v1->get_batiments()) {
+        if(Usine->gettype()=="Usine"){
+            UsineNames << Usine->getname(); // Assuming `getName()` exists in `Maison`
+        }
+    }
+    dialog.populateUsines(UsineNames);
 
+    // Execute the dialog
+    if (dialog.exec() == QDialog::Accepted) {
+        int selectedIndex = dialog.getSelectedUsineIndex();
+
+
+        // Ensure a valid house is selected
+        if (selectedIndex < 0 || selectedIndex >= v1->get_batiments().size()) {
+            QMessageBox::warning(this, "Invalid Selection", "Please select a valid Usine.");
+            return;
+        }
+
+        // Add habitants to the selected house
+        auto selectedUsine = std::dynamic_pointer_cast<usine>(v1->get_batiments()[selectedIndex]);
+        selectedUsine->produire_eau();
+
+        // Show a confirmation message
+        QMessageBox::information(this,
+                                 "water produced",
+                                 QString(" 500 water have been added to %2.\nCurrent waterproduced: %3")
+                                     .arg(selectedUsine->getname())
+                                     .arg(selectedUsine->geteau()));
+    }
 }
 
 

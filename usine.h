@@ -15,6 +15,7 @@ public:
     void afficherDetails() override;
     void calculerImpactRessources() override;
     QString getDetails() const override;
+    int geteau() const;
 };
 
 #endif // USINE_H

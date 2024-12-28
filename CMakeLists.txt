@@ -35,6 +35,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         createmaison.h createmaison.cpp createmaison.ui
         createville.h createville.cpp createville.ui
         createusine.h createusine.cpp createusine.ui
+        produireeau.h produireeau.cpp produireeau.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET VirtualCity APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

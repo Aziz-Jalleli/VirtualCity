@@ -27,6 +27,7 @@ public:
     int get_id()const;
     virtual QString getDetails() const;
     virtual QString getname();
+    QString gettype();
 
 
 };

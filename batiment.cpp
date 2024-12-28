@@ -71,3 +71,6 @@ QString Batiment:: getDetails() const {
 QString Batiment::getname(){
     return nom;
 }
+QString Batiment::gettype(){
+    return type;
+}

@@ -38,3 +38,6 @@ void usine::calculerImpactRessources() {
     cons_eau=500;
     cons_elec=2000;
 }
+int usine::geteau() const{
+    return production_eau;
+}
