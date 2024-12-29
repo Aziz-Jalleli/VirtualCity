@@ -12,6 +12,7 @@
 #include"createusine.h"
 #include"produireeau.h"
 #include"produireelectricite.h"
+#include"createparc.h"
 using namespace std;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -241,4 +242,66 @@ void MainWindow::on_pushButton_6_clicked()
                                      .arg(selectedUsine->getelectricite()));
     }
 }
+
+
+void MainWindow::on_Create_Parc_clicked()
+{
+    if (!v1) {
+        QMessageBox::warning(this, "No City", "Please create a city before adding habitants.");
+        return;
+    }
+    createparc createDialog(this);
+
+    if (createDialog.exec() == QDialog::Accepted) {
+        // Retrieve input values
+        QString ParcName = createDialog.findChild<QLineEdit*>("lineEdit")->text();
+
+        // Retrieve and validate budget input
+        QString SurfaceText = createDialog.findChild<QLineEdit*>("lineEdit_2")->text();
+        bool ok;
+        int Surface = SurfaceText.toInt(&ok);
+
+        if (!ok) {
+            QMessageBox::warning(this, "Invalid Input", "Please enter a valid integer for the budget.");
+            return;
+        }
+
+        // Create the Ville object
+        p1 = std::make_shared<parc>(1,ParcName, Surface);
+        if (v1) {
+            v1->ajouterBatiment(p1);
+
+        }
+
+        // Display the details of the created Maison
+        Afficherdetails afficherdetails(this);
+        afficherdetails.setDetails(p1->getDetails());
+        afficherdetails.exec();
+
+        QMessageBox::information(this, "Parc Created", "The Parc object has been successfully created.");
+    }
+}
+
+void MainWindow::on_Ameliore_BienEtre_clicked()
+{
+    bool ok=false;
+    for (const auto& Parc : v1->get_batiments()) {
+        if(Parc->gettype()=="Parc"){
+            auto p =std::dynamic_pointer_cast<parc>(Parc);
+            p->ameliorerBienEtre();
+
+            QMessageBox::information(this, "Bien etre amélioré", QString("5% bien etre have been added . Cureent Bien etre:%1")
+                                                                             .arg(p->get_effetbienetre()));
+            ok=true;
+            break;
+        }
+    }
+    if (ok){
+    QMessageBox::information(this, "No Parcs Created", "Create a parc before");
+    }
+}
+
+
+
+
 

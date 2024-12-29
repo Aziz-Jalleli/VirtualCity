@@ -2,11 +2,11 @@
 #include<iostream>
 #include<Qstring>
 using namespace std;
-parc::parc(int id,QString nom,QString type,int cons_eau,int cons_elec,int satisfaction,float surface ,int effetBienEtre) : Batiment(nullptr, id, nom, type, cons_eau, cons_elec, effet_satisfaction) {
-    this->surface=surface;
-    this->effetBienEtre=effetBienEtre;
+parc::parc(int id,QString nom,float surface) : Batiment(nullptr, id, nom, "parc", 0, 700, 5) {
+    cons_eau=surface/10;
+    effetBienEtre=0;
     effet_satisfaction=5;
-    parc::calculerImpactRessources();
+
 }
 
 void parc::ameliorerBienEtre (){
@@ -29,4 +29,7 @@ void parc::calculerImpactRessources() {
 }
 void parc::diminueBienEtre(){
     this->effetBienEtre/2;
+}
+int parc::get_effetbienetre(){
+    return effetBienEtre;
 }

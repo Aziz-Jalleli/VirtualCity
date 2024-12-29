@@ -30,6 +30,7 @@ public:
     QString gettype();
 
 
+
 };
 
 #endif // BATIMENT_H

@@ -14,11 +14,12 @@ private:
 public:
     bool isParc() const override { return true; }
 
-    parc(int,QString,QString,int,int ,int,float,int);
-    void ameliorerBienEtre ();
+    parc(int,QString,float);
+    void ameliorerBienEtre () ;
     void afficherDetails() override;
     void calculerImpactRessources() override;
     void diminueBienEtre();
+    int get_effetbienetre();
 
 };
 
