@@ -247,61 +247,83 @@ void MainWindow::on_pushButton_6_clicked()
 void MainWindow::on_Create_Parc_clicked()
 {
     if (!v1) {
-        QMessageBox::warning(this, "No City", "Please create a city before adding habitants.");
+        QMessageBox::warning(this, "No City", "Please create a city before adding a park.");
         return;
     }
+
+    // Check if a park already exists (you need to define this check depending on your class structure)
+    bool parcExists = false;
+    for (const auto& batiment : v1->get_batiments()) {
+        if (std::dynamic_pointer_cast<parc>(batiment)) {
+            parcExists = true;
+            break;
+        }
+    }
+
+    if (parcExists) {
+        QMessageBox::information(this, "Park Exists", "A park has already been created.");
+        return;
+    }
+
     createparc createDialog(this);
 
+    // If the user accepts the dialog
     if (createDialog.exec() == QDialog::Accepted) {
         // Retrieve input values
         QString ParcName = createDialog.findChild<QLineEdit*>("lineEdit")->text();
-
-        // Retrieve and validate budget input
         QString SurfaceText = createDialog.findChild<QLineEdit*>("lineEdit_2")->text();
+
         bool ok;
-        int Surface = SurfaceText.toInt(&ok);
+        float Surface = SurfaceText.toFloat(&ok);
 
         if (!ok) {
-            QMessageBox::warning(this, "Invalid Input", "Please enter a valid integer for the budget.");
+            QMessageBox::warning(this, "Invalid Input", "Please enter a valid float for the surface.");
             return;
         }
 
-        // Create the Ville object
-        p1 = std::make_shared<parc>(1,ParcName, Surface);
+        // Create a new Parc object
+        auto p1 = std::make_shared<parc>(1, ParcName, Surface);
+
         if (v1) {
             v1->ajouterBatiment(p1);
-
         }
 
-        // Display the details of the created Maison
+        // Display the details of the created Parc
         Afficherdetails afficherdetails(this);
         afficherdetails.setDetails(p1->getDetails());
         afficherdetails.exec();
 
-        QMessageBox::information(this, "Parc Created", "The Parc object has been successfully created.");
+        QMessageBox::information(this, "Parc Created", "The park has been successfully created.");
     }
 }
+
 
 void MainWindow::on_Ameliore_BienEtre_clicked()
 {
-    bool ok=false;
-    for (const auto& Parc : v1->get_batiments()) {
-        if(Parc->gettype()=="Parc"){
-            auto p =std::dynamic_pointer_cast<parc>(Parc);
-            p->ameliorerBienEtre();
+    if (!v1) {
+        QMessageBox::warning(this, "No City", "Please create a city first.");
+        return;
+    }
 
-            QMessageBox::information(this, "Bien etre amélioré", QString("5% bien etre have been added . Cureent Bien etre:%1")
-                                                                             .arg(p->get_effetbienetre()));
-            ok=true;
-            break;
+    bool foundParc = false;
+
+    for (const auto& Parc : v1->get_batiments()) {
+        qDebug() << "Checking building type:" << Parc->gettype();
+        if (Parc->gettype() == "Parc") {
+            auto p = std::dynamic_pointer_cast<parc>(Parc);
+            if (p) {
+                qDebug() << "Found Parc: " << p->getname();
+                p->ameliorerBienEtre();
+                QMessageBox::information(this, "Bien-être amélioré",
+                                         QString("5% de bien-être ajoutés. Bien-être actuel : %1")
+                                             .arg(p->get_effetbienetre()));
+                foundParc = true;
+                break;
+            }
         }
     }
-    if (ok){
-    QMessageBox::information(this, "No Parcs Created", "Create a parc before");
+
+    if (!foundParc) {
+        QMessageBox::information(this, "No Parcs Created", "Create a parc before.");
     }
 }
-
-
-
-
-
