@@ -13,6 +13,10 @@
 #include"produireeau.h"
 #include"produireelectricite.h"
 #include"createparc.h"
+#include "batimentgraphicsitem.h"
+#include <QGraphicsView>
+#include <QGraphicsScene>
+#include "graphicswindow.h"
 using namespace std;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -34,6 +38,7 @@ void MainWindow::on_Create_Maison_clicked()
         QMessageBox::warning(this, "No City", "Please create a city before adding habitants.");
         return;
     }
+
     // Open the CreateMaison dialog
     createmaison createDialog(this);
 
@@ -44,22 +49,22 @@ void MainWindow::on_Create_Maison_clicked()
         int capacity = createDialog.findChild<QSpinBox*>("spinBox")->value();
 
         // Create a new Maison object
-         m1 = std::make_shared<Maison>(1, houseName, capacity);
+        m1 = std::make_shared<Maison>(1, houseName, capacity);
 
         if (v1) {
             v1->ajouterBatiment(m1);
-
         }
 
-        // Display the details of the created Maison
-        Afficherdetails afficherdetails(this);
-        afficherdetails.setDetails(m1->getDetails());
-        afficherdetails.exec();
+        // Add the building (Maison) to the existing scene
+        if (graphicsWindow) {
+            graphicsWindow->addBuilding(houseName, "Maison");
+        } else {
+            QMessageBox::warning(this, "Error", "City layout window is not available.");
+        }
 
         QMessageBox::information(this, "Maison Created", "The Maison object has been successfully created.");
     }
 }
-
 
 void MainWindow::on_Ajouter_Habitant_clicked()
 {
@@ -107,8 +112,8 @@ void MainWindow::on_Ajouter_Habitant_clicked()
 void MainWindow::on_Create_Ville_clicked()
 {
     createville createDialog(this);
-
     if (createDialog.exec() == QDialog::Accepted) {
+
         // Retrieve input values
         QString VilleName = createDialog.findChild<QLineEdit*>("lineEdit")->text();
 
@@ -124,6 +129,16 @@ void MainWindow::on_Create_Ville_clicked()
 
         // Create the Ville object
         v1 = std::make_shared<Ville>(nullptr, VilleName, Budget);
+        QGraphicsScene *scene = new QGraphicsScene();
+        scene->setSceneRect(0, 0, 800, 600);
+
+        // Create the city layout (for example, a 5x5 grid)
+        graphicsWindow = new GraphicsWindow(scene);
+        graphicsWindow->createCityLayout(5, 5); // 5x5 grid of blocks
+
+        // Display the window
+        QGraphicsView *view = new QGraphicsView(scene);
+        view->show();
     }
 }
 
@@ -152,10 +167,12 @@ void MainWindow::on_Create_Usine_clicked()
 
         }
 
-        // Display the details of the created Maison
-        Afficherdetails afficherdetails(this);
-        afficherdetails.setDetails(u1->getDetails());
-        afficherdetails.exec();
+        if (graphicsWindow) {
+            graphicsWindow->addBuilding(UsineName, "Usine");
+        } else {
+            QMessageBox::warning(this, "Error", "City layout window is not available.");
+        }
+
 
         QMessageBox::information(this, "Usine Created", "The Usine object has been successfully created.");
     }

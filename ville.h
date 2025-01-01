@@ -5,6 +5,7 @@
 #include <vector>
 #include "batiment.h"
 #include <memory>
+#include <QGraphicsScene>
 using namespace std;
 class Ville: public QObject
 {
@@ -18,9 +19,11 @@ private:
     int eau;
     int electricite;
     vector<std::shared_ptr<Batiment>> batiments;
+    QGraphicsScene* scene;
 
 public:
     Ville(QObject *parent=nullptr, QString="", int=0);
+      Ville(QGraphicsScene* scene);
     Ville& operator=(const Ville& other);
     void ajouterBatiment(shared_ptr<Batiment> );
     void supprimerBatiment(int );
