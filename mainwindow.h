@@ -23,6 +23,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void updateProgressBars();
 
 private slots:
     void on_Create_Maison_clicked();
@@ -44,6 +45,7 @@ private slots:
     void on_Ameliore_BienEtre_clicked();
 
     void on_pushButton_clicked();
+
 
 private:
     Ui::MainWindow *ui;

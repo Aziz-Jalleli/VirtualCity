@@ -4,11 +4,12 @@
 #include "maison.h" // Si vous utilisez une classe Maison
 #include <QString>
 #include <vector>
+#include"usine.h"
 
 using namespace std;
 
 Ville::Ville(QObject* parent, QString nom, int budget)
-    : QObject(parent), nom(nom), budget(budget), population(0), satisfaction(0), eau(0), electricite(0) {}
+    : QObject(parent), nom(nom), budget(budget), population(0), satisfaction(0), eau(0), electricite(0),produced_eau(0),produced_electricite(0) {}
 Ville::Ville(QGraphicsScene* scene)
     : scene(scene) {}
 Ville& Ville::operator=(const Ville& other) {
@@ -32,24 +33,15 @@ Ville& Ville::operator=(const Ville& other) {
 
 
 
-void Ville::calculerConsommationTotale() {
-    eau = 0;
-    electricite = 0;
-    for (const auto &batiment : batiments) {
-        eau += batiment->get_eau();
-        electricite += batiment->get_elec();
-    }
-}
 
-void Ville::CalculerSatisfaction() {
-    satisfaction = 0;
+int Ville::getSatisfaction() {
     for (const auto &batiment : batiments) {
         satisfaction += batiment->get_satisfaction();
     }
+    return satisfaction;
 }
 
-void Ville::calculerPopulation() {
-    population = 0;
+int Ville::getPopulation() {
 
     for (const auto& batiment : batiments) {
         std::shared_ptr<Maison> maison = std::dynamic_pointer_cast<Maison>(batiment);
@@ -57,23 +49,45 @@ void Ville::calculerPopulation() {
             population += maison->get_habitant();
         }
     }
+    return population;
 }
 
-int Ville::get_Elec() const {
+int Ville::get_produced_eau(){
+    produced_eau = 0;
+    for (const auto& batiment : batiments) {
+        std::shared_ptr<usine> Usine = std::dynamic_pointer_cast<usine>(batiment);
+        if (Usine) {
+            produced_eau += Usine->geteau();
+        }
+    }
+    return produced_eau;
+}
+int Ville::get_produced_electricite(){
+    produced_electricite = 0;
+    for (const auto& batiment : batiments) {
+        std::shared_ptr<usine> Usine = std::dynamic_pointer_cast<usine>(batiment);
+        if (Usine) {
+            produced_electricite += Usine->getelectricite();
+        }
+    }
+    return produced_electricite;
+}
+
+int Ville::get_Elec()  {
+    electricite=0;
+    for (const auto &batiment : batiments) {
+        electricite += batiment->get_elec();
+    }
     return electricite;
 }
-
-void Ville::set_Elec(int newelec) {
-    electricite = newelec;
+int Ville::get_Eau()  {
+    eau=0;
+    for (const auto &batiment : batiments) {
+        eau += batiment->get_eau();
+    }
+    return eau;
 }
 
-int Ville::get_satisfaction() const {
-    return satisfaction;
-}
-
-void Ville::set_satisfaction(int newv) {
-    satisfaction = newv;
-}
 
 vector<std::shared_ptr<Batiment>> Ville::get_batiments() const {
     return batiments;

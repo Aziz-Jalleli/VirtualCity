@@ -18,6 +18,8 @@ private:
     int satisfaction;
     int eau;
     int electricite;
+    int produced_eau;
+    int produced_electricite;
     vector<std::shared_ptr<Batiment>> batiments;
     QGraphicsScene* scene;
 
@@ -27,15 +29,14 @@ public:
     Ville& operator=(const Ville& other);
     void ajouterBatiment(shared_ptr<Batiment> );
     void supprimerBatiment(int );
-    void calculerPopulation();
-    void calculerConsommationTotale();
-    void CalculerSatisfaction();
-    int get_Elec () const;
-    void set_Elec (int );
-    int get_satisfaction () const;
-    void set_satisfaction (int ) ;
     void Event_panne_courant ();
     vector<std::shared_ptr<Batiment>> get_batiments() const;
+    int get_Eau ();
+    int get_Elec ();
+    int get_produced_eau();
+    int get_produced_electricite();
+    int getPopulation();
+    int getSatisfaction();
 };
 
 #endif // VILLE_H

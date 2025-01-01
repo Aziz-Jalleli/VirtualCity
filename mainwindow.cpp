@@ -64,6 +64,7 @@ void MainWindow::on_Create_Maison_clicked()
 
         QMessageBox::information(this, "Maison Created", "The Maison object has been successfully created.");
     }
+    updateProgressBars();
 }
 
 void MainWindow::on_Ajouter_Habitant_clicked()
@@ -105,6 +106,7 @@ void MainWindow::on_Ajouter_Habitant_clicked()
                                      .arg(selectedMaison->getname())
                                      .arg(selectedMaison->get_habitant()));
     }
+    updateProgressBars();
 }
 
 
@@ -140,6 +142,7 @@ void MainWindow::on_Create_Ville_clicked()
         QGraphicsView *view = new QGraphicsView(scene);
         view->show();
     }
+    updateProgressBars();
 }
 
 
@@ -176,6 +179,7 @@ void MainWindow::on_Create_Usine_clicked()
 
         QMessageBox::information(this, "Usine Created", "The Usine object has been successfully created.");
     }
+    updateProgressBars();
 }
 
 
@@ -217,6 +221,7 @@ void MainWindow::on_Produire_eau_clicked()
                                      .arg(selectedUsine->getname())
                                      .arg(selectedUsine->geteau()));
     }
+    updateProgressBars();
 }
 
 
@@ -254,10 +259,11 @@ void MainWindow::on_pushButton_6_clicked()
         // Show a confirmation message
         QMessageBox::information(this,
                                  "water produced",
-                                 QString(" 6000 water have been added to %2.\nCurrent waterproduced: %3")
+                                 QString(" 6000 electricite have been added to %2.\nCurrent electricite produced: %3")
                                      .arg(selectedUsine->getname())
                                      .arg(selectedUsine->getelectricite()));
     }
+    updateProgressBars();
 }
 
 
@@ -312,6 +318,7 @@ void MainWindow::on_Create_Parc_clicked()
 
         QMessageBox::information(this, "Parc Created", "The park has been successfully created.");
     }
+    updateProgressBars();
 }
 
 
@@ -344,3 +351,35 @@ void MainWindow::on_Ameliore_BienEtre_clicked()
         QMessageBox::information(this, "No Parcs Created", "Create a parc before.");
     }
 }
+void MainWindow::updateProgressBars() {
+    if (!v1) {
+        // If no city is created, reset all progress bars to 0
+        ui->Eau->setMaximum(1);
+        ui->Eau->setValue(0);
+
+        ui->Electricite->setMaximum(1);
+        ui->Electricite->setValue(0);
+
+        return;
+    }
+
+    // Update Eau ProgressBar
+    int maxEau = v1->get_Eau();               // Get the maximum water capacity
+    int producedEau = v1->get_produced_eau(); // Get the current produced water
+
+    ui->Eau->setMaximum(maxEau > 0 ? maxEau : 1); // Prevent division by 0
+    ui->Eau->setValue(producedEau);
+
+    // Update Electricite ProgressBar
+    int maxElectricite = v1->get_Elec();                     // Get the maximum electricity capacity
+    int producedElectricite = v1->get_produced_electricite(); // Get the current produced electricity
+
+    ui->Electricite->setMaximum(maxElectricite > 0 ? maxElectricite : 1); // Prevent division by 0
+    ui->Electricite->setValue(producedElectricite);
+
+    // Optional: Update labels or log debug messages if needed
+    qDebug() << "Updated Progress Bars:";
+    qDebug() << "Eau -> Max:" << maxEau << " Produced:" << producedEau;
+    qDebug() << "Electricite -> Max:" << maxElectricite << " Produced:" << producedElectricite;
+}
+

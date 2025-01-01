@@ -1,4 +1,4 @@
-#include "simulation.h"
+/*#include "simulation.h"
 #include "ville.h"
 #include <cstdlib>
 #include<iostream>
@@ -65,5 +65,5 @@ void Simulation::Event_jardiniers() {
 void Simulation::Event_panne_transports_publics(){
     int n= Myville.get_satisfaction() - (Myville.get_satisfaction()*0.10);
     Myville.set_satisfaction(n);
-}
+}*/
 

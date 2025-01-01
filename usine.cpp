@@ -13,11 +13,11 @@ usine::usine(int id,QString nom) :Batiment(nullptr,id, nom, "Usine", 500, 2000,1
     production_elec=0;
 }
 void usine::produire_eau(){
-    production_eau+=1360;
+    production_eau+=50;
         pollution+=3;
 }
 void usine::produire_elec(){
-    production_elec+=6000;
+    production_elec+=100;
         pollution+=6;
 }
 void usine::afficherDetails() {
