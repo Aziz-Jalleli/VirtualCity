@@ -6,6 +6,10 @@
 #include"ville.h"
 #include"usine.h"
 #include"parc.h"
+#include <QMainWindow>
+#include <QGraphicsScene>
+#include "graphicswindow.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -47,5 +51,6 @@ private:
     std::shared_ptr<Ville> v1;
     std::shared_ptr<usine> u1;
     std::shared_ptr<parc> p1;
+    GraphicsWindow *graphicsWindow;
 };
 #endif // MAINWINDOW_H

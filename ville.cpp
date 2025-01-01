@@ -9,7 +9,8 @@ using namespace std;
 
 Ville::Ville(QObject* parent, QString nom, int budget)
     : QObject(parent), nom(nom), budget(budget), population(0), satisfaction(0), eau(0), electricite(0) {}
-
+Ville::Ville(QGraphicsScene* scene)
+    : scene(scene) {}
 Ville& Ville::operator=(const Ville& other) {
     if (this == &other) {
         return *this;  // Avoid self-assignment
