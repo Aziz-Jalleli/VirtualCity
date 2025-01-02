@@ -415,6 +415,8 @@ void MainWindow::updateProgressBars() {
     qDebug() << "Updated Progress Bars:";
     qDebug() << "Eau -> Max:" << maxEau << " Produced:" << producedEau;
     qDebug() << "Electricite -> Max:" << maxElectricite << " Produced:" << producedElectricite;
+    qDebug() << "Satisfaction:" << maxSatisfaction << " Pollution:" << maxPollution;
+
 }
 
 
