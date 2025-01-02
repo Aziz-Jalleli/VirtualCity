@@ -31,7 +31,7 @@
          <item>
           <widget class="QPushButton" name="Create_Ville">
            <property name="text">
-            <string>Create Ville</string>
+            <string>Start Simulation</string>
            </property>
           </widget>
          </item>
@@ -98,7 +98,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>230</x>
@@ -124,7 +124,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -150,7 +150,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>280</x>
@@ -176,7 +176,29 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>500</y>
+      <width>144</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Population</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLCDNumber" name="Population"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>250</x>
@@ -185,22 +207,35 @@
       <height>30</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_6">
+    <layout class="QHBoxLayout" name="horizontalLayout_7">
      <item>
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>population</string>
+        <string>Pollution</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QProgressBar" name="bienetre">
+      <widget class="QProgressBar" name="Pollution">
        <property name="value">
         <number>24</number>
        </property>
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>80</y>
+      <width>111</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Simulate Event</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

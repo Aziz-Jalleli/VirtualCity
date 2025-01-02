@@ -9,7 +9,7 @@
 using namespace std;
 
 Ville::Ville(QObject* parent, QString nom, int budget)
-    : QObject(parent), nom(nom), budget(budget), population(0), satisfaction(0), eau(0), electricite(0),produced_eau(0),produced_electricite(0) {}
+    : QObject(parent), nom(nom), budget(budget), population(0), satisfaction(0), eau(0), electricite(0),produced_eau(0),produced_electricite(0),Pollution(0) {}
 Ville::Ville(QGraphicsScene* scene)
     : scene(scene) {}
 Ville& Ville::operator=(const Ville& other) {
@@ -31,18 +31,39 @@ Ville& Ville::operator=(const Ville& other) {
     return *this;  // Return the current object
 }
 
-
-
-
+int Ville::get_satisfaction(){
+    return satisfaction;
+}
+void Ville::set_satisfaction(int n){
+    satisfaction = n;
+}
 int Ville::getSatisfaction() {
+    satisfaction=0;
     for (const auto &batiment : batiments) {
         satisfaction += batiment->get_satisfaction();
     }
     return satisfaction;
 }
 
-int Ville::getPopulation() {
+int Ville::get_pollution(){
+    return Pollution;
+}
+void Ville::set_pollution(int n){
+    Pollution = n;
+}
+int Ville::getPollution(){
+    Pollution=0;
+    for (const auto& batiment : batiments) {
+        std::shared_ptr<usine> Usine = std::dynamic_pointer_cast<usine>(batiment);
+        if (Usine) {
+            Pollution += Usine->getpollution();
+        }
+    }
+    return Pollution;
+}
 
+int Ville::getPopulation() {
+    population=0;
     for (const auto& batiment : batiments) {
         std::shared_ptr<Maison> maison = std::dynamic_pointer_cast<Maison>(batiment);
         if (maison) {
@@ -72,7 +93,12 @@ int Ville::get_produced_electricite(){
     }
     return produced_electricite;
 }
-
+int Ville::getElec(){
+    return electricite;
+}
+void Ville::setElec(int n){
+    electricite = n;
+}
 int Ville::get_Elec()  {
     electricite=0;
     for (const auto &batiment : batiments) {

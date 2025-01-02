@@ -17,6 +17,7 @@ public:
     QString getDetails() const override;
     int geteau() const;
     int getelectricite() const;
+    int getpollution() const ;
 };
 
 #endif // USINE_H

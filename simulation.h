@@ -4,10 +4,7 @@
 #include <QObject>
 #include<vector>
 #include<QString>
-#include "batiment.h"
-#include "parc.h"
 #include "ville.h"
-
 #include "ville.h"
 class Simulation: public QObject
 {
@@ -20,11 +17,15 @@ public:
     Simulation (const Ville&);
     void demarrerCycle();
     void terminerCycle();
-    void Event_pigeons();
-    void Event_jardiniers();
-    void declencherEvenement();
-    void Event_panne_transports_publics();
-    void Event_panne_courant ();
+    QString Event_pigeons();
+    QString Event_jardiniers();
+    QString declencherEvenement();
+    QString Event_panne_transports_publics();
+    QString Event_panne_courant ();
+
+    void service_nettoyage();
+    QString Tempete_neige();
+    void deneigement();
 };
 
 #endif // SIMULATION_H

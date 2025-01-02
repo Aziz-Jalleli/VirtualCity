@@ -131,6 +131,8 @@ void MainWindow::on_Create_Ville_clicked()
 
         // Create the Ville object
         v1 = std::make_shared<Ville>(nullptr, VilleName, Budget);
+        Ville v2(nullptr, VilleName, Budget);
+        s1 = std::make_shared<Simulation>(v2);
         QGraphicsScene *scene = new QGraphicsScene();
         scene->setSceneRect(0, 0, 800, 600);
 
@@ -150,7 +152,7 @@ void MainWindow::on_Create_Ville_clicked()
 
 void MainWindow::on_Create_Usine_clicked()
 {
-    if (!v1) {
+    if (!s1) {
         QMessageBox::warning(this, "No City", "Please create a city before adding habitants.");
         return;
     }
@@ -185,7 +187,7 @@ void MainWindow::on_Create_Usine_clicked()
 
 void MainWindow::on_Produire_eau_clicked()
 {
-    if (!v1) {
+    if (!s1) {
         QMessageBox::warning(this, "No City", "Please create a city before adding habitants.");
         return;
     }
@@ -227,7 +229,7 @@ void MainWindow::on_Produire_eau_clicked()
 
 void MainWindow::on_pushButton_6_clicked()
 {
-    if (!v1) {
+    if (!s1) {
         QMessageBox::warning(this, "No City", "Please create a city before adding habitants.");
         return;
     }
@@ -269,7 +271,7 @@ void MainWindow::on_pushButton_6_clicked()
 
 void MainWindow::on_Create_Parc_clicked()
 {
-    if (!v1) {
+    if (!s1) {
         QMessageBox::warning(this, "No City", "Please create a city before adding a park.");
         return;
     }
@@ -316,6 +318,12 @@ void MainWindow::on_Create_Parc_clicked()
         afficherdetails.setDetails(p1->getDetails());
         afficherdetails.exec();
 
+        if (graphicsWindow) {
+            graphicsWindow->addBuilding(ParcName, "Parc");
+        } else {
+            QMessageBox::warning(this, "Error", "City layout window is not available.");
+        }
+
         QMessageBox::information(this, "Parc Created", "The park has been successfully created.");
     }
     updateProgressBars();
@@ -324,7 +332,7 @@ void MainWindow::on_Create_Parc_clicked()
 
 void MainWindow::on_Ameliore_BienEtre_clicked()
 {
-    if (!v1) {
+    if (!s1) {
         QMessageBox::warning(this, "No City", "Please create a city first.");
         return;
     }
@@ -352,7 +360,7 @@ void MainWindow::on_Ameliore_BienEtre_clicked()
     }
 }
 void MainWindow::updateProgressBars() {
-    if (!v1) {
+    if (!s1) {
         // If no city is created, reset all progress bars to 0
         ui->Eau->setMaximum(1);
         ui->Eau->setValue(0);
@@ -360,6 +368,11 @@ void MainWindow::updateProgressBars() {
         ui->Electricite->setMaximum(1);
         ui->Electricite->setValue(0);
 
+        ui->satisfaction->setMaximum(1);
+        ui->satisfaction->setValue(0);
+
+        ui->Pollution->setMaximum(1);
+        ui->Pollution->setValue(0);
         return;
     }
 
@@ -376,6 +389,27 @@ void MainWindow::updateProgressBars() {
 
     ui->Electricite->setMaximum(maxElectricite > 0 ? maxElectricite : 1); // Prevent division by 0
     ui->Electricite->setValue(producedElectricite);
+
+    //update Satisfaction ProgressBar
+
+    int maxSatisfaction= v1->getSatisfaction();
+
+    ui->satisfaction->setMaximum(250); // Prevent division by 0
+    ui->satisfaction->setValue(maxSatisfaction);
+
+    //update Pollution ProgressBar
+
+    int maxPollution= v1->getPollution();
+
+    ui->Pollution->setMaximum(150); // Prevent division by 0
+    ui->Pollution->setValue(maxPollution);
+
+    //update Population ProgressBar
+
+    int maxPopulation= v1->getPopulation();
+
+    ui->Population->display(maxPopulation);
+
 
     // Optional: Update labels or log debug messages if needed
     qDebug() << "Updated Progress Bars:";

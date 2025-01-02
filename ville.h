@@ -20,6 +20,7 @@ private:
     int electricite;
     int produced_eau;
     int produced_electricite;
+    int Pollution;
     vector<std::shared_ptr<Batiment>> batiments;
     QGraphicsScene* scene;
 
@@ -37,6 +38,16 @@ public:
     int get_produced_electricite();
     int getPopulation();
     int getSatisfaction();
+    int getPollution();
+
+    int get_satisfaction();
+    void set_satisfaction(int);
+
+    int get_pollution();
+    void set_pollution(int);
+
+    int getElec();
+    void setElec(int);
 };
 
 #endif // VILLE_H

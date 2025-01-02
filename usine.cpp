@@ -44,4 +44,6 @@ int usine::geteau() const{
 int usine::getelectricite() const{
     return production_elec;
 }
-
+int usine::getpollution() const{
+    return pollution;
+}

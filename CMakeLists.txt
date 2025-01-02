@@ -41,7 +41,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         batimentgraphicsitem.h batimentgraphicsitem.cpp
         graphicswindow.h graphicswindow.cpp
         resources.qrc
-        resources.qrc
+
+
 
 
     )

@@ -1,32 +1,39 @@
-/*#include "simulation.h"
+#include "simulation.h"
 #include "ville.h"
 #include <cstdlib>
 #include<iostream>
-#include "batiment.h"
 #include "parc.h"
+#include<QString>
 using namespace std;
 Simulation::Simulation(const Ville& v) {
-    Myville =v;
+    Myville = v;
     cycleActuel=0;
-    Evenements.push_back("incendies");
+    Evenements.push_back("TempeteNeige");
     Evenements.push_back("Grève");
-    Evenements.push_back("&nondation");
+    Evenements.push_back("PanneCourant");
     Evenements.push_back("pigeons");
     Evenements.push_back("transport");
 }
-void Simulation::declencherEvenement() {
+QString Simulation::declencherEvenement() {
     int index = rand() % Evenements.size();
     QString evenement = Evenements[index];
 
     if (evenement == "pigeons") {
-        Event_pigeons();
+        return Event_pigeons();
     }
     else if (evenement == "Grève") {
-        Event_jardiniers();
+        return Event_jardiniers();
     }
     else if (evenement == "transport") {
-        Event_panne_transports_publics();
+        return Event_panne_transports_publics();
     }
+    else if (evenement == "PanneCourant"){
+        return Event_panne_courant();
+    }
+    else if (evenement == "TempeteNeige"){
+        return Tempete_neige();
+    }
+    return 0;
 }
 void Simulation::demarrerCycle() {
     cycleActuel++;
@@ -37,33 +44,54 @@ void Simulation::terminerCycle() {
     cout << "Fin du cycle " <<cycleActuel<< ".\n";
     cycleActuel--;
 }
-void Simulation::Event_panne_courant (){
-    int n= Myville.get_Elec()-(Myville.get_Elec()*0.5);
-    Myville.set_Elec(n);
+
+QString Simulation::Event_panne_courant (){
+    int n= Myville.getElec()*2;
+    Myville.setElec(n);
+    return QString("Une panne de courant fait grimper la consommation d’énergie de 50 %.");
 }
-void Simulation::Event_pigeons(){
+
+QString Simulation::Event_pigeons(){
     int n= Myville.get_satisfaction() - (Myville.get_satisfaction()*0.15);
+    Myville.set_pollution(Myville.getPollution()+30);
+    Myville.set_satisfaction(n);
+    return QString("Une nuée de pigeons géants envahit votre ville ! Résultat  une baisse de 15% de la satisfaction des habitants. De plus, ils déplorent la présence de trop de déchets dans les rues. Heureusement, vous avez un  service de nettoyage  à gérer pour remettre de l'ordre.");
+}
+
+void Simulation::service_nettoyage(){
+    int n= Myville.get_satisfaction() + (Myville.get_satisfaction()*0.15);
+    Myville.set_pollution(Myville.getPollution()-30);
     Myville.set_satisfaction(n);
 }
-void Simulation::Event_jardiniers() {
+
+QString Simulation::Event_jardiniers() {
     int n = Myville.get_satisfaction() - (Myville.get_satisfaction() * 0.20);
     Myville.set_satisfaction(n);
 
-    std::vector<std::shared_ptr<Batiment>> batiments = Myville.get_batiments();
-
-    for (const auto& b : batiments) {
-        if (auto p = std::dynamic_pointer_cast<parc>(b)) {
+    for (const auto& Parc :  Myville.get_batiments() ) {
+        if(Parc->gettype()=="Parc"){
+            auto p = std::dynamic_pointer_cast<parc>(Parc);
             p->diminueBienEtre();
         }
     }
+    return QString("Les jardiniers de la ville sont en grève et refusent d’entretenir les parcs et espaces verts ! La satisfaction de vos habitants tombe de 20% et l’effet des parcs diminue de moitié.");
+
 }
 
-
-
-
-
-void Simulation::Event_panne_transports_publics(){
+QString Simulation::Event_panne_transports_publics(){
     int n= Myville.get_satisfaction() - (Myville.get_satisfaction()*0.10);
     Myville.set_satisfaction(n);
-}*/
+     return QString("Une panne géante de transports publics se produit, tous les bus de la ville sont bloqués par un gigantesque embouteillage ! Résultat : la satisfaction chute brutalement. Les habitants doivent maintenant marcher pour aller au travail, à l'école et au parc.");
+}
+
+QString Simulation::Tempete_neige(){
+    int n= Myville.get_satisfaction() - (Myville.get_satisfaction()*0.10);
+    Myville.set_satisfaction(n);
+    return QString("Une tempête de neige imprévu bloque les routes, interrompt la production des usines et rend les habitants grumpy. Mais ne vous inquiétez pas, vous avez une chance d'envoyer des équipes de déneigement pour sauver la situation.");
+}
+
+void Simulation::deneigement(){
+    int n= Myville.get_satisfaction() + (Myville.get_satisfaction()*0.10);
+    Myville.set_satisfaction(n);
+}
 
