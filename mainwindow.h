@@ -40,12 +40,10 @@ private slots:
 
     void on_Create_Parc_clicked();
 
-    void on_pushButton_2_clicked();
-
     void on_Ameliore_BienEtre_clicked();
 
-    void on_pushButton_clicked();
 
+    void on_SimulateEvent_clicked();
 
 private:
     Ui::MainWindow *ui;

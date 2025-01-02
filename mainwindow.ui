@@ -224,7 +224,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="SimulateEvent">
     <property name="geometry">
      <rect>
       <x>270</x>

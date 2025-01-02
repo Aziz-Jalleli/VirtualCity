@@ -17,7 +17,6 @@ Simulation::Simulation(const Ville& v) {
 QString Simulation::declencherEvenement() {
     int index = rand() % Evenements.size();
     QString evenement = Evenements[index];
-
     if (evenement == "pigeons") {
         return Event_pigeons();
     }
@@ -33,7 +32,7 @@ QString Simulation::declencherEvenement() {
     else if (evenement == "TempeteNeige"){
         return Tempete_neige();
     }
-    return 0;
+    return QString("An unknown event occurred.");
 }
 void Simulation::demarrerCycle() {
     cycleActuel++;
@@ -87,7 +86,7 @@ QString Simulation::Event_panne_transports_publics(){
 QString Simulation::Tempete_neige(){
     int n= Myville.get_satisfaction() - (Myville.get_satisfaction()*0.10);
     Myville.set_satisfaction(n);
-    return QString("Une tempête de neige imprévu bloque les routes, interrompt la production des usines et rend les habitants grumpy. Mais ne vous inquiétez pas, vous avez une chance d'envoyer des équipes de déneigement pour sauver la situation.");
+    return QString("Une tempête de neige imprévu bloque les routes, interrompt la production des usines et rend les habitants grumpy.");
 }
 
 void Simulation::deneigement(){

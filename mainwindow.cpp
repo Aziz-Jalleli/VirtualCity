@@ -417,3 +417,19 @@ void MainWindow::updateProgressBars() {
     qDebug() << "Electricite -> Max:" << maxElectricite << " Produced:" << producedElectricite;
 }
 
+
+void MainWindow::on_SimulateEvent_clicked()
+{
+    if (!s1) {
+        QMessageBox::warning(this, "No City", "Please create a city before adding a park.");
+        return;
+    }
+    QString Message=s1->declencherEvenement();
+    QMessageBox::information(this,"Event" ,Message);
+    if (Message.contains("tempête de neige", Qt::CaseInsensitive)) {
+        ui->Produire_eau->setEnabled(false);
+        ui->pushButton_6->setEnabled(false);
+    }
+    updateProgressBars();
+
+}
