@@ -163,26 +163,44 @@ void MainWindow::on_Create_Usine_clicked()
         // Retrieve input values
         QString UsineName = createDialog.findChild<QLineEdit*>("lineEdit")->text();
 
-
-        // Create a new Maison object
-        u1 = std::make_shared<usine>(1, UsineName);
-
-        if (v1) {
-            v1->ajouterBatiment(u1);
-
+        // Check if v1 is valid
+        if (!v1) {
+            QMessageBox::warning(this, "Error", "City object is not initialized.");
+            return;
         }
 
+        // Check for duplicate names in existing buildings
+        bool alreadyExists = false;
+        for (const auto& batiment : v1->get_batiments()) {
+            if (batiment->getname() == UsineName) {
+                alreadyExists = true;
+                break;
+            }
+        }
+
+        if (alreadyExists) {
+            QMessageBox::warning(this, "Duplicate Usine", "An Usine with this name already exists.");
+            return;
+        }
+
+        // Create a new Usine object
+        u1 = std::make_shared<usine>(1, UsineName);
+
+        // Add the new Usine to the city
+        v1->ajouterBatiment(u1);
+
+        // Update graphics window if available
         if (graphicsWindow) {
             graphicsWindow->addBuilding(UsineName, "Usine");
         } else {
             QMessageBox::warning(this, "Error", "City layout window is not available.");
         }
 
-
         QMessageBox::information(this, "Usine Created", "The Usine object has been successfully created.");
     }
     updateProgressBars();
 }
+
 
 
 void MainWindow::on_Produire_eau_clicked()
@@ -191,41 +209,48 @@ void MainWindow::on_Produire_eau_clicked()
         QMessageBox::warning(this, "No City", "Please create a city before adding habitants.");
         return;
     }
+
     // Create and display the custom dialog
     produireeau dialog(this);
+
+    // Create a filtered list of Usine objects
     QStringList UsineNames;
-    for (const auto& Usine : v1->get_batiments()) {
-        if(Usine->gettype()=="Usine"){
-            UsineNames << Usine->getname(); // Assuming `getName()` exists in `Maison`
+    std::vector<std::shared_ptr<usine>> usineList;
+
+    for (const auto& batiment : v1->get_batiments()) {
+        if (batiment->gettype() == "Usine") {
+            auto usineObj = std::dynamic_pointer_cast<usine>(batiment);
+            if (usineObj) {
+                usineList.push_back(usineObj);
+                UsineNames << usineObj->getname();
+            }
         }
     }
+
+    // Populate the dialog with filtered Usine names
     dialog.populateUsines(UsineNames);
 
     // Execute the dialog
     if (dialog.exec() == QDialog::Accepted) {
         int selectedIndex = dialog.getSelectedUsineIndex();
 
-
-        // Ensure a valid house is selected
-        if (selectedIndex < 0 || selectedIndex >= v1->get_batiments().size()) {
+        if (selectedIndex < 0 || selectedIndex >= usineList.size()) {
             QMessageBox::warning(this, "Invalid Selection", "Please select a valid Usine.");
             return;
         }
 
-        // Add habitants to the selected house
-        auto selectedUsine = std::dynamic_pointer_cast<usine>(v1->get_batiments()[selectedIndex]);
+        auto selectedUsine = usineList[selectedIndex];
         selectedUsine->produire_eau();
 
         // Show a confirmation message
         QMessageBox::information(this,
-                                 "water produced",
-                                 QString(" 1360 water have been added to %2.\nCurrent waterproduced: %3")
+                                 "Water Produced",
+                                 QString("1360 water have been added to %1.\nCurrent water produced: %2")
                                      .arg(selectedUsine->getname())
                                      .arg(selectedUsine->geteau()));
     }
     updateProgressBars();
 }
-
 
 void MainWindow::on_pushButton_6_clicked()
 {
@@ -233,41 +258,47 @@ void MainWindow::on_pushButton_6_clicked()
         QMessageBox::warning(this, "No City", "Please create a city before adding habitants.");
         return;
     }
+
     // Create and display the custom dialog
     produireelectricite dialog(this);
     QStringList UsineNames;
-    for (const auto& Usine : v1->get_batiments()) {
-        if(Usine->gettype()=="Usine"){
-            UsineNames << Usine->getname(); // Assuming `getName()` exists in `Maison`
+    std::vector<std::shared_ptr<usine>> usineList;
+
+    // Filter the batiments to include only Usine objects
+    for (const auto& batiment : v1->get_batiments()) {
+        if (batiment->gettype() == "Usine") {
+            auto usineObj = std::dynamic_pointer_cast<usine>(batiment);
+            if (usineObj) {
+                usineList.push_back(usineObj);
+                UsineNames << usineObj->getname();
+            }
         }
     }
+
+    // Populate the dialog with the filtered Usine names
     dialog.populateUsines(UsineNames);
 
     // Execute the dialog
     if (dialog.exec() == QDialog::Accepted) {
         int selectedIndex = dialog.getSelectedUsineIndex();
 
-
-        // Ensure a valid house is selected
-        if (selectedIndex < 0 || selectedIndex >= v1->get_batiments().size()) {
+        if (selectedIndex < 0 || selectedIndex >= usineList.size()) {
             QMessageBox::warning(this, "Invalid Selection", "Please select a valid Usine.");
             return;
         }
 
-        // Add habitants to the selected house
-        auto selectedUsine = std::dynamic_pointer_cast<usine>(v1->get_batiments()[selectedIndex]);
+        auto selectedUsine = usineList[selectedIndex];
         selectedUsine->produire_elec();
 
         // Show a confirmation message
         QMessageBox::information(this,
-                                 "water produced",
-                                 QString(" 6000 electricite have been added to %2.\nCurrent electricite produced: %3")
+                                 "Electricity Produced",
+                                 QString("6000 electricity have been added to %1.\nCurrent electricity produced: %2")
                                      .arg(selectedUsine->getname())
                                      .arg(selectedUsine->getelectricite()));
     }
     updateProgressBars();
 }
-
 
 void MainWindow::on_Create_Parc_clicked()
 {
