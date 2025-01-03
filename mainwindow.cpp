@@ -48,14 +48,21 @@ void MainWindow::on_Create_Maison_clicked()
         QString houseName = createDialog.findChild<QLineEdit*>("lineEdit")->text();
         int capacity = createDialog.findChild<QSpinBox*>("spinBox")->value();
 
+        // Validate that houseName is not empty
+        if (houseName.isEmpty()) {
+            QMessageBox::warning(this, "Invalid Input", "House name cannot be empty.");
+            return;
+        }
+
         // Create a new Maison object
         m1 = std::make_shared<Maison>(1, houseName, capacity);
 
+        // Ensure the object is properly added to the city (v1)
         if (v1) {
-            v1->ajouterBatiment(m1);
+            v1->ajouterBatiment(m1);  // Add Maison to the city's building list
         }
 
-        // Add the building (Maison) to the existing scene
+        // Add the building (Maison) to the graphics window if available
         if (graphicsWindow) {
             graphicsWindow->addBuilding(houseName, "Maison");
         } else {
@@ -64,6 +71,7 @@ void MainWindow::on_Create_Maison_clicked()
 
         QMessageBox::information(this, "Maison Created", "The Maison object has been successfully created.");
     }
+
     updateProgressBars();
 }
 
@@ -73,14 +81,25 @@ void MainWindow::on_Ajouter_Habitant_clicked()
         QMessageBox::warning(this, "No City", "Please create a city before adding habitants.");
         return;
     }
+
     // Create and display the custom dialog
     addhabitant dialog(this);
     QStringList houseNames;
-    for (const auto& maison : v1->get_batiments()) {
-        if(maison->gettype()=="Maison"){
-            houseNames << maison->getname(); // Assuming `getName()` exists in `Maison`
+    QList<std::shared_ptr<Maison>> maisonList;
+
+    // Populate the list with names of valid Maison objects
+    for (const auto& batiment : v1->get_batiments()) {
+        if (auto maison = std::dynamic_pointer_cast<Maison>(batiment)) {  // Attempt to cast to Maison
+            houseNames << maison->getname();  // Add the name of the valid Maison
+            maisonList << maison;  // Store the actual Maison objects in the list
+        }
     }
+
+    if (houseNames.isEmpty()) {
+        QMessageBox::warning(this, "No Houses", "There are no valid houses available.");
+        return;
     }
+
     dialog.populateHouses(houseNames);
 
     // Execute the dialog
@@ -89,26 +108,30 @@ void MainWindow::on_Ajouter_Habitant_clicked()
         int numHabitants = dialog.getHabitants();
 
         // Ensure a valid house is selected
-        if (selectedIndex < 0 || selectedIndex >= v1->get_batiments().size()) {
+        if (selectedIndex < 0 || selectedIndex >= maisonList.size()) {
             QMessageBox::warning(this, "Invalid Selection", "Please select a valid house.");
             return;
         }
 
-        // Add habitants to the selected house
-        auto selectedMaison = std::dynamic_pointer_cast<Maison>(v1->get_batiments()[selectedIndex]);
-        selectedMaison->ajouterHabitants(numHabitants);
+        // Get the selected Maison object from maisonList by index and add habitants
+        auto selectedMaison = maisonList[selectedIndex];
+        if (selectedMaison) {
+            selectedMaison->ajouterHabitants(numHabitants);
 
-        // Show a confirmation message
-        QMessageBox::information(this,
-                                 "Habitants Added",
-                                 QString("%1 habitants have been added to %2.\nCurrent inhabitants: %3")
-                                     .arg(numHabitants)
-                                     .arg(selectedMaison->getname())
-                                     .arg(selectedMaison->get_habitant()));
+            // Show a confirmation message
+            QMessageBox::information(this,
+                                     "Habitants Added",
+                                     QString("%1 habitants have been added to %2.\nCurrent inhabitants: %3")
+                                         .arg(numHabitants)
+                                         .arg(selectedMaison->getname())
+                                         .arg(selectedMaison->get_habitant()));
+        } else {
+            QMessageBox::warning(this, "Selection Error", "The selected house is not valid.");
+        }
     }
+
     updateProgressBars();
 }
-
 
 
 void MainWindow::on_Create_Ville_clicked()
