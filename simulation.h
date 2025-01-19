@@ -14,7 +14,9 @@ private:
     Ville Myville;
     vector<QString> Evenements;
 public:
+    Simulation (shared_ptr<Ville> villePtr);
     Simulation (const Ville&);
+    std::shared_ptr<Ville> get_ville();
     void demarrerCycle();
     void terminerCycle();
     QString Event_pigeons();
