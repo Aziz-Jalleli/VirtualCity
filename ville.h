@@ -48,6 +48,11 @@ public:
 
     int getElec();
     void setElec(int);
+    Ville(const Ville&) = delete;  // Empêcher la copie
+    Ville(Ville&& other) noexcept {
+        // Transfer ownership of resources from 'other' to 'this'
+        // For example: this->resource = std::move(other.resource);
+    }
 };
 
 #endif // VILLE_H

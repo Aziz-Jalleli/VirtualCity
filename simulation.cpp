@@ -5,6 +5,15 @@
 #include "parc.h"
 #include<QString>
 using namespace std;
+Simulation::Simulation(std::shared_ptr<Ville> villePtr) {
+    Myville = *villePtr;
+    cycleActuel = 0;
+    Evenements.push_back("TempeteNeige");
+    Evenements.push_back("Grève");
+    Evenements.push_back("PanneCourant");
+    Evenements.push_back("pigeons");
+    Evenements.push_back("transport");
+}
 Simulation::Simulation(const Ville& v) {
     Myville = v;
     cycleActuel=0;
@@ -13,6 +22,9 @@ Simulation::Simulation(const Ville& v) {
     Evenements.push_back("PanneCourant");
     Evenements.push_back("pigeons");
     Evenements.push_back("transport");
+}
+std::shared_ptr<Ville> Simulation::get_ville() {
+    return std::make_shared<Ville>(std::move(Myville));  // Use std::move to move Myville
 }
 QString Simulation::declencherEvenement() {
     int index = rand() % Evenements.size();

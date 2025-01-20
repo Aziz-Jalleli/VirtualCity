@@ -59,7 +59,7 @@ void MainWindow::on_Create_Maison_clicked()
 
         // Ensure the object is properly added to the city (v1)
         if (v1) {
-            v1->ajouterBatiment(m1);  // Add Maison to the city's building list
+            s1->get_ville()->ajouterBatiment(m1);  // Add Maison to the city's building list
         }
 
         // Add the building (Maison) to the graphics window if available
@@ -154,8 +154,7 @@ void MainWindow::on_Create_Ville_clicked()
 
         // Create the Ville object
         v1 = std::make_shared<Ville>(nullptr, VilleName, Budget);
-        Ville v2(nullptr, VilleName, Budget);
-        s1 = std::make_shared<Simulation>(v2);
+        s1 = std::make_shared<Simulation>(v1);
         QGraphicsScene *scene = new QGraphicsScene();
         scene->setSceneRect(0, 0, 800, 600);
 
