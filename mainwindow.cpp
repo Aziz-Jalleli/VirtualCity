@@ -17,7 +17,10 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include "graphicswindow.h"
+#include "CityWindow.h"
+
 using namespace std;
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -59,12 +62,17 @@ void MainWindow::on_Create_Maison_clicked()
 
         // Ensure the object is properly added to the city (v1)
         if (v1) {
-            s1->get_ville()->ajouterBatiment(m1);  // Add Maison to the city's building list
+            v1->ajouterBatiment(m1);  // Add Maison to the city's building list
         }
 
         // Add the building (Maison) to the graphics window if available
         if (graphicsWindow) {
             graphicsWindow->addBuilding(houseName, "Maison");
+        } else {
+            QMessageBox::warning(this, "Error", "City layout window is not available.");
+        }
+        if (cityWindow) {
+            cityWindow->createHouseInFrontOfCamera();
         } else {
             QMessageBox::warning(this, "Error", "City layout window is not available.");
         }
@@ -77,7 +85,7 @@ void MainWindow::on_Create_Maison_clicked()
 
 void MainWindow::on_Ajouter_Habitant_clicked()
 {
-    if (!v1) {
+    if (!s1->get_ville()) {
         QMessageBox::warning(this, "No City", "Please create a city before adding habitants.");
         return;
     }
@@ -152,9 +160,10 @@ void MainWindow::on_Create_Ville_clicked()
             return;
         }
 
-        // Create the Ville object
-        v1 = std::make_shared<Ville>(nullptr, VilleName, Budget);
-        s1 = std::make_shared<Simulation>(v1);
+
+        s1 = std::make_shared<Simulation>(std::make_shared<Ville>(nullptr, VilleName, Budget));
+        v1 = s1->get_ville();
+
         QGraphicsScene *scene = new QGraphicsScene();
         scene->setSceneRect(0, 0, 800, 600);
 
@@ -165,6 +174,9 @@ void MainWindow::on_Create_Ville_clicked()
         // Display the window
         QGraphicsView *view = new QGraphicsView(scene);
         view->show();
+        cityWindow = new CityWindow(v1, nullptr);
+        cityWindow->show();
+
     }
     updateProgressBars();
 }
@@ -217,6 +229,12 @@ void MainWindow::on_Create_Usine_clicked()
         } else {
             QMessageBox::warning(this, "Error", "City layout window is not available.");
         }
+        if (cityWindow) {
+            cityWindow->createFactoryInFrontOfCamera();
+        } else {
+            QMessageBox::warning(this, "Error", "City layout window is not available.");
+        }
+
 
         QMessageBox::information(this, "Usine Created", "The Usine object has been successfully created.");
     }
@@ -370,6 +388,11 @@ void MainWindow::on_Create_Parc_clicked()
         Afficherdetails afficherdetails(this);
         afficherdetails.setDetails(p1->getDetails());
         afficherdetails.exec();
+        if (cityWindow) {
+            cityWindow->createParkInFrontOfCamera();
+        } else {
+            QMessageBox::warning(this, "Error", "City layout window is not available.");
+        }
 
         if (graphicsWindow) {
             graphicsWindow->addBuilding(ParcName, "Parc");

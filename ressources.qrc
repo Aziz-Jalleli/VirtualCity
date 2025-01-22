@@ -1,10 +1,8 @@
 <RCC>
     <qresource prefix="/images">
+        <file>images/Cottage_FREE.obj</file>
         <file>images/house.png</file>
         <file>images/park.png</file>
         <file>images/usine.png</file>
-    </qresource>
-    <qresource prefix="/">
-        <file>images/Cottage_FREE.obj</file>
     </qresource>
 </RCC>
