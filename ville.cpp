@@ -30,7 +30,14 @@ Ville& Ville::operator=(const Ville& other) {
 
     return *this;  // Return the current object
 }
-
+Ville::Ville(const Ville& other)
+    : QObject(other.parent()), nom(other.nom), budget(other.budget),
+    population(other.population), satisfaction(other.satisfaction),
+    eau(other.eau), electricite(other.electricite),
+    produced_eau(other.produced_eau), produced_electricite(other.produced_electricite),
+    Pollution(other.Pollution), batiments(other.batiments) {
+    // Optionally, deep copy resources here (e.g., shared pointers)
+}
 int Ville::get_satisfaction(){
     return satisfaction;
 }

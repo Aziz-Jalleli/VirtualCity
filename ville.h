@@ -27,6 +27,7 @@ private:
 public:
     Ville(QObject *parent=nullptr, QString="", int=0);
       Ville(QGraphicsScene* scene);
+    Ville(const Ville& );
     Ville& operator=(const Ville& other);
     void ajouterBatiment(shared_ptr<Batiment> );
     void supprimerBatiment(int );
@@ -48,7 +49,7 @@ public:
 
     int getElec();
     void setElec(int);
-    Ville(const Ville&) = delete;  // Empêcher la copie
+
     Ville(Ville&& other) noexcept {
         // Transfer ownership of resources from 'other' to 'this'
         // For example: this->resource = std::move(other.resource);

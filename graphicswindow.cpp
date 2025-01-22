@@ -11,6 +11,7 @@ GraphicsWindow::GraphicsWindow(QGraphicsScene *scene, QWidget *parent)
     view->setRenderHint(QPainter::Antialiasing);
     view->setRenderHint(QPainter::SmoothPixmapTransform);
 
+
     // Set the size of the view if needed
     view->setFixedSize(800, 600);
 

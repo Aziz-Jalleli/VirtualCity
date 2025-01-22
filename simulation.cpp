@@ -24,7 +24,7 @@ Simulation::Simulation(const Ville& v) {
     Evenements.push_back("transport");
 }
 std::shared_ptr<Ville> Simulation::get_ville() {
-    return std::make_shared<Ville>(std::move(Myville));  // Use std::move to move Myville
+    return std::make_shared<Ville>(Myville);  // Return a copy of Myville
 }
 QString Simulation::declencherEvenement() {
     int index = rand() % Evenements.size();
